@@ -22,7 +22,11 @@ function Experience() {
           title="Member Technical Staff"
           company="Zoho Corporation"
           duration="July 2022 - July 2024"
-          description="Worked as a backend developer on a team of 10 members. Developed several APIs and optimized memory using Redis caching strategies."
+          description={[
+            "My primary task was working as a backend engineer on building and optimizing a Twitter clone application.",
+            "I utilized Java, Apache Struts, MySQL, Redis, Elasticsearch, ArangoDB, and Kafka to design scalable backend services, enhance data retrieval speed, and implement efficient caching and search solutions.",
+            "I focused on improving user interactions, ensuring secure data management, and optimizing performance in a high-scale environment.",
+          ]}
           logo="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg"
           link="https://www.zoho.com/"
         />
@@ -31,8 +35,12 @@ function Experience() {
           title="Project Trainee"
           company="Zoho Corporation"
           duration="Feb 2022 - July 2022"
-          description="Completed multiple assignments on Core and advanced Java concepts."
-          logo="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg"
+          description={[
+            "Gained proficiency in Linux administration, networking (TCP/IP, DNS, routing), and cloud computing.", 
+            "Contributed to debugging large-scale system issues, reducing incident resolution time.",
+            "Developed and optimized RESTful APIs and backend logic, improving application throughput.",
+          ]}
+            logo="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg"
           link="https://www.zoho.com/"
         />
       </div>

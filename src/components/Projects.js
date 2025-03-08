@@ -31,60 +31,68 @@ function Projects() {
             "Utilized Docker for containerization and GitHub Actions for CI/CD, streamlining testing and deployment.",
             "Deployed the platform on AWS, ensuring high availability and auto-scaling.",
           ]}
+          githubUrl="https://github.com/Vamsi-027/RateRateProf"
         />
         <ProjectCard
           title="Warfin Dose Prediction"
           description={[
-            "Preprocessed large-scale clinical datasets, increasing model accuracy by 15%.",
-            "Built personalized medicine models using KNN, Random Forest, and Neural Networks, reducing dosage prediction errors by 20%.",
-            "Applied hyperparameter tuning and cross-validation, improving precision and recall metrics by 18%.",
+            "Preprocessed large-scale clinical datasets, resulting in a 15% increase in model accuracy.",
+            "Developed personalized medicine models using KNN, Random Forest, and Neural Networks, reducing dosage prediction errors by 20%",
+            "Applied hyperparameter tuning and cross-validation techniques to optimize model performance.",
+            "Enhanced precision and recall metrics by 18%, improving the overall predictive capabilities of the models",
           ]}
+          // githubUrl="https://github.com/Vamsi-027/Warfin-Dose-Prediction"
         />
         <ProjectCard
           title="Skill Pro"
           description={[
-            "A platform to assess and track skill growth with AI-driven personalized recommendations.",
-            "Integrated interactive dashboards and analytics to provide user insights.",
-            "Developed a microservices-based architecture for scalability.",
+            "Developed a mobile application using Flutter to streamline student performance evaluation and eliminate paper-based documentation.",
+            "Enabled faculty to monitor and assess student progress over time, fostering continuous skill improvement.",
+            "Integrated features for students to self-check their competencies, promoting self-directed learning and development.",
+            "Enhanced post-evaluation follow-up processes, providing a more efficient method for tracking student skill growth.",
           ]}
+          githubUrl="https://github.com/Vamsi-027/SkillPro"
         />
       </div>
     </motion.section>
   );
 }
 
-function ProjectCard({ title, description }) {
+function ProjectCard({ title, description, githubUrl }) {
   const { ref, inView, entry } = useInView({ triggerOnce: false, threshold: 0.3 });
 
   // Determine direction based on scrolling behavior
   const isScrollingDown = entry?.boundingClientRect.top > entry?.rootBounds?.top;
 
   return (
-    <div
-      ref={ref}
-      className="bg-gray-800 p-4 rounded-lg shadow-lg overflow-hidden"
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={
-          inView
-            ? { opacity: 1, y: 0 }
-            : isScrollingDown
-            ? { opacity: 0, y: 50 } // Scroll down effect (content goes down)
-            : { opacity: 0, y: -50 } // Scroll up effect (content goes up)
-        }
-        transition={{ duration: 1.0, ease: "easeInOut" }}
+    <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+      <div
+        ref={ref}
+        className="bg-gray-800 p-4 rounded-lg shadow-lg overflow-hidden flex flex-col h-full"
       >
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <ul className="text-gray-400 mt-2 space-y-2">
-          {description.map((point, index) => (
-            <li key={index} className="list-disc list-inside">
-              {point}
-            </li>
-          ))}
-        </ul>
-      </motion.div>
-    </div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={
+            inView
+              ? { opacity: 1, y: 0 }
+              : isScrollingDown
+              ? { opacity: 0, y: 50 } // Scroll down effect (content goes down)
+              : { opacity: 0, y: -50 } // Scroll up effect (content goes up)
+          }
+          transition={{ duration: 1.0, ease: "easeInOut" }}
+          className="flex-1"
+        >
+          <h3 className="text-xl font-semibold">{title}</h3>
+          <ul className="text-gray-400 mt-2 space-y-2">
+            {description.map((point, index) => (
+              <li key={index} className="list-disc list-inside">
+                {point}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </div>
+    </a>
   );
 }
 
