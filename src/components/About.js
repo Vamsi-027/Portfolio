@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { useInView } from "react-intersection-observer";
+import WaterDropGrid from './WaterDropGrid'; // Import the WaterDropGrid component
 
 function About() {
   const { ref, inView, entry } = useInView({
@@ -17,10 +18,10 @@ function About() {
     <section
       ref={ref}
       id="about"
-      className="h-screen flex justify-center items-center bg-gray-900 text-white text-center p-4"
+      className="h-screen relative flex justify-center items-center bg-gray-900 text-white text-center p-4"
     >
       <motion.div
-        className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+        className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10" // Set z-10 to bring this content on top of the background
         initial={{ opacity: 0, y: 50 }}
         animate={
           inView
@@ -46,11 +47,11 @@ function About() {
         >
           <h2 className="text-3xl font-bold mb-6">About Me</h2>
           <p className="text-lg leading-relaxed">
-            Results-driven Software Engineer with experience in backend
+            I'm <b>Vamsi Cheruku</b>, a results-driven Software Engineer with experience in backend
             development, distributed systems, and cloud computing. Skilled in
             designing, implementing, and optimizing scalable backend services.
           </p>
-          
+
           {/* Social Icons with Text */}
           <div className="mt-6 flex justify-center md:justify-start space-x-6">
             <div className="flex items-center space-x-2">
