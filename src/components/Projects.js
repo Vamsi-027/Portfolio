@@ -41,7 +41,7 @@ function Projects() {
             "Applied hyperparameter tuning and cross-validation techniques to optimize model performance.",
             "Enhanced precision and recall metrics by 18%, improving the overall predictive capabilities of the models",
           ]}
-          // githubUrl="https://github.com/Vamsi-027/Warfin-Dose-Prediction"
+          githubUrl="https://github.com/Vamsi-027/Warfin-Dose-Prediction"
         />
         <ProjectCard
           title="Skill Pro"
