@@ -24,8 +24,8 @@ function Experience() {
           duration="July 2022 - July 2024"
           description={[
             "My primary task was working as a backend engineer on building and optimizing a Twitter clone application.",
-            "I utilized Java, Apache Struts, MySQL, Redis, Elasticsearch, ArangoDB, and Kafka to design scalable backend services, enhance data retrieval speed, and implement efficient caching and search solutions.",
-            "I focused on improving user interactions, ensuring secure data management, and optimizing performance in a high-scale environment.",
+            " I utilized Java, Apache Struts, MySQL, Redis, Elasticsearch, ArangoDB, and Kafka to design scalable backend services, enhance data retrieval speed, and implement efficient caching and search solutions.",
+            " I focused on improving user interactions, ensuring secure data management, and optimizing performance in a high-scale environment.",
           ]}
           logo="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg"
           link="https://www.zoho.com/"
@@ -37,8 +37,8 @@ function Experience() {
           duration="Feb 2022 - July 2022"
           description={[
             "Gained proficiency in Linux administration, networking (TCP/IP, DNS, routing), and cloud computing.", 
-            "Contributed to debugging large-scale system issues, reducing incident resolution time.",
-            "Developed and optimized RESTful APIs and backend logic, improving application throughput.",
+            " Contributed to debugging large-scale system issues, reducing incident resolution time.",
+            " Developed and optimized RESTful APIs and backend logic, improving application throughput.",
           ]}
             logo="https://www.zohowebstatic.com/sites/zweb/images/commonroot/zoho-logo-web.svg"
           link="https://www.zoho.com/"
