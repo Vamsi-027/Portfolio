@@ -25,8 +25,3 @@ This is my **personal portfolio website** showcasing my **skills, projects, and 
 ### Connect with me:
 - **LinkedIn:** [LinkedIn](https://www.linkedin.com/in/vamsi-cheruku-05a19a1b4/)
 - **GitHub:** [Github](https://github.com/Vamsi-027)
-
----
-
-If you like my work, please give it a ⭐ on GitHub! 🚀
-
