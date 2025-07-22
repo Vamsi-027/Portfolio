@@ -15,7 +15,6 @@ import {
   SiMysql, 
   SiRedis, 
   SiElasticsearch, 
-  SiKafka,
   SiKubernetes,
   SiJenkins,
   SiPostman
@@ -79,7 +78,7 @@ function Skills() {
       title: "Tools & Others",
       skills: [
         { name: "Git", icon: FaGitAlt, level: 90, color: "text-orange-600" },
-        { name: "Kafka", icon: SiKafka, level: 75, color: "text-gray-800" },
+        { name: "Kafka", icon: FaDatabase, level: 75, color: "text-gray-800" },
         { name: "React", icon: FaReact, level: 70, color: "text-blue-400" },
         { name: "Postman", icon: SiPostman, level: 85, color: "text-orange-500" },
       ]
