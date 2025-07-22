@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaLinkedin, FaGithub, FaHeart, FaArrowUp } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaHeart, FaArrowUp, FaEnvelope } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 
 function Footer() {
@@ -9,7 +9,7 @@ function Footer() {
 
   return (
     <motion.footer
-      className="bg-gray-900 border-t border-gray-800"
+      className="bg-slate-900 border-t border-slate-800"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.0 }}
@@ -22,15 +22,16 @@ function Footer() {
               Vamsi Cheruku
             </h3>
             <p className="text-gray-400 leading-relaxed">
-              Software Engineer passionate about building scalable backend systems 
-              and creating innovative solutions that make a difference.
+              Backend Developer specializing in scalable web applications. 
+              Passionate about building robust systems that power modern applications 
+              and drive business success.
             </p>
             <div className="flex space-x-4">
               <a
                 href="https://www.linkedin.com/in/vamsi-cheruku-05a19a1b4/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 bg-gray-800 hover:bg-blue-600 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
+                className="p-2 bg-slate-800 hover:bg-blue-600 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin size={20} />
@@ -39,7 +40,7 @@ function Footer() {
                 href="https://github.com/Vamsi-027"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
+                className="p-2 bg-slate-800 hover:bg-gray-700 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
                 aria-label="GitHub"
               >
                 <FaGithub size={20} />
@@ -48,10 +49,17 @@ function Footer() {
                 href="https://leetcode.com/18pa1a0531/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 bg-gray-800 hover:bg-orange-500 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
+                className="p-2 bg-slate-800 hover:bg-orange-500 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
                 aria-label="LeetCode"
               >
                 <SiLeetcode size={20} />
+              </a>
+              <a
+                href="mailto:vamsicheruku027@gmail.com"
+                className="p-2 bg-slate-800 hover:bg-green-600 text-gray-400 hover:text-white rounded-lg transition-all duration-300 transform hover:scale-110"
+                aria-label="Email"
+              >
+                <FaEnvelope size={20} />
               </a>
             </div>
           </div>
@@ -70,7 +78,7 @@ function Footer() {
                 <button
                   key={link.href}
                   onClick={() => document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' })}
-                  className="block text-gray-400 hover:text-white transition-colors duration-300"
+                  className="block text-gray-400 hover:text-white transition-colors duration-300 text-left"
                 >
                   {link.label}
                 </button>
@@ -80,28 +88,46 @@ function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">Get In Touch</h4>
-            <div className="space-y-2 text-gray-400">
-              <p>Chennai, India</p>
-              <a 
-                href="mailto:vamsicheruku027@gmail.com"
-                className="block hover:text-white transition-colors duration-300"
-              >
-                vamsicheruku027@gmail.com
-              </a>
-              <p className="text-sm">
-                Open to new opportunities and exciting projects
-              </p>
+            <h4 className="text-lg font-semibold text-white">Let's Connect</h4>
+            <div className="space-y-3 text-gray-400">
+              <div>
+                <p className="font-medium text-white">Location</p>
+                <p>Chennai, India</p>
+              </div>
+              <div>
+                <p className="font-medium text-white">Email</p>
+                <a 
+                  href="mailto:vamsicheruku027@gmail.com"
+                  className="hover:text-white transition-colors duration-300"
+                >
+                  vamsicheruku027@gmail.com
+                </a>
+              </div>
+              <div>
+                <p className="font-medium text-white">Phone</p>
+                <a 
+                  href="tel:+13143586905"
+                  className="hover:text-white transition-colors duration-300"
+                >
+                  +1 (314) 358-6905
+                </a>
+              </div>
+              <div className="pt-2">
+                <span className="inline-flex items-center px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-sm">
+                  <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+                  Available for opportunities
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
-            <span>© 2025 Vamsi Cheruku. Made with</span>
+            <span>© 2025 Vamsi Cheruku. Built with</span>
             <FaHeart className="text-red-500" size={16} />
-            <span>and lots of coffee</span>
+            <span>and lots of coffee ☕</span>
           </div>
           
           <button
