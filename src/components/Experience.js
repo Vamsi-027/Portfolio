@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
 
 function Experience() {
   return (
@@ -50,25 +49,13 @@ function Experience() {
 
 function ExperienceCard({ title, company, duration, description, logo, link }) {
   const { ref, inView, entry } = useInView({ threshold: 0.3 });
-  const [scrollDirection, setScrollDirection] = useState(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (entry) {
-        const newDirection =
-          entry.boundingClientRect.top < entry.rootBounds.top ? "down" : "up";
-        setScrollDirection(newDirection);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [entry]);
+  
+  const isScrollingDown = entry?.boundingClientRect?.top > entry?.rootBounds?.top;
 
   const motionVariants = {
-    hidden: { opacity: 0, y: scrollDirection === "down" ? 50 : -50 },
+    hidden: { opacity: 0, y: isScrollingDown ? 50 : -50 },
     visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: scrollDirection === "down" ? -50 : 50 },
+    exit: { opacity: 0, y: isScrollingDown ? -50 : 50 },
   };
 
   return (
