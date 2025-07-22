@@ -1,9 +1,26 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaChevronDown, FaCode, FaServer, FaDatabase } from "react-icons/fa";
+import { useState } from "react";
+import { FaChevronDown, FaCode, FaServer, FaDatabase, FaMoon, FaSun } from "react-icons/fa";
 
 function Hero() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+  const [darkMode, setDarkMode] = useState(() =>
+    typeof window !== 'undefined' ? document.documentElement.classList.contains('dark') : false
+  );
+
+  const toggleDarkMode = () => {
+    if (typeof window !== 'undefined') {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        setDarkMode(false);
+      } else {
+        html.classList.add('dark');
+        setDarkMode(true);
+      }
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,11 +52,70 @@ function Hero() {
     <motion.section
       ref={ref}
       id="home"
-      className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white relative overflow-hidden"
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={containerVariants}
     >
+      {/* Branding Monogram */}
+      <div className="absolute top-8 left-8 z-20 flex items-center space-x-3">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
+          <circle cx="24" cy="24" r="22" fill="#1e293b" stroke="#3b82f6" strokeWidth="3"/>
+          <text x="50%" y="54%" textAnchor="middle" fill="#3b82f6" fontSize="22" fontWeight="bold" fontFamily="'Inter',sans-serif" dominantBaseline="middle">VC</text>
+        </svg>
+        <span className="text-lg font-semibold text-blue-200 tracking-wide hidden sm:inline">Vamsi Cheruku</span>
+      </div>
+
+      {/* Dark/Light Mode Toggle */}
+      <button
+        className="absolute top-8 right-8 z-20 bg-white/10 border border-blue-400 rounded-full p-2 text-blue-400 hover:bg-blue-600/20 transition-all duration-300"
+        aria-label="Toggle dark/light mode"
+        onClick={toggleDarkMode}
+      >
+        {darkMode ? (
+          <FaSun size={24} />
+        ) : (
+          <FaMoon size={24} />
+        )}
+      </button>
+
+      {/* Hero Content */}
+      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-5xl px-4 py-16 md:py-32 gap-12">
+        {/* Photo Placeholder */}
+        <div className="w-40 h-40 md:w-56 md:h-56 rounded-2xl overflow-hidden shadow-2xl animate-float bg-gradient-to-br from-blue-400/30 to-purple-400/20 flex items-center justify-center">
+          <svg width="100%" height="100%" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <text x="50%" y="56%" textAnchor="middle" fill="#3b82f6" fontSize="64" fontWeight="bold" fontFamily="'Inter',sans-serif" dominantBaseline="middle">VC</text>
+          </svg>
+        </div>
+        {/* Text Content */}
+        <div className="flex-1 text-center md:text-left space-y-6">
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent leading-tight mb-2 flex items-center justify-center md:justify-start gap-4"
+          >
+            <span>Backend Engineer | Distributed Systems & Scalable Solutions</span>
+            <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block align-middle">
+              <circle cx="24" cy="24" r="22" fill="#1e293b" stroke="#3b82f6" strokeWidth="3"/>
+              <text x="50%" y="54%" textAnchor="middle" fill="#3b82f6" fontSize="20" fontWeight="bold" fontFamily="'Inter',sans-serif" dominantBaseline="middle">VC</text>
+            </svg>
+          </motion.h1>
+          <motion.p
+            variants={itemVariants}
+            className="text-xl md:text-2xl text-blue-100 font-medium mb-4"
+          >
+            I design and build robust, high-performance backend systems for modern businesses.
+          </motion.p>
+          <motion.div variants={itemVariants} className="text-base md:text-lg text-gray-300 mb-6">
+            <span className="block mb-1">2+ years at Zoho. Expert in Java, Python, MySQL, Redis, Elasticsearch, AWS.</span>
+            <span className="block">Proven impact: <span className="text-blue-300 font-semibold">40% faster systems</span>, <span className="text-blue-300 font-semibold">50% less downtime</span>, <span className="text-blue-300 font-semibold">1M+ messages/day</span>.</span>
+          </motion.div>
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a href="#projects" className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">See My Work</a>
+            <a href="#contact" className="px-8 py-4 border-2 border-blue-400/50 text-blue-300 hover:bg-blue-600/20 hover:border-blue-400 rounded-xl font-semibold transition-all duration-300">Contact Me</a>
+          </motion.div>
+        </div>
+      </div>
+
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -73,81 +149,6 @@ function Hero() {
           <Icon />
         </motion.div>
       ))}
-
-      <div className="text-center px-4 relative z-10 max-w-5xl mx-auto">
-        <motion.div variants={itemVariants} className="mb-6">
-          <span className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 text-sm font-medium mb-6 backdrop-blur-sm">
-            <FaServer className="mr-2" />
-            Backend Developer & System Architect
-          </span>
-        </motion.div>
-
-        <motion.h1
-          variants={itemVariants}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent leading-tight"
-        >
-          Vamsi Cheruku
-        </motion.h1>
-
-        <motion.div
-          variants={itemVariants}
-          className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto"
-        >
-          <span className="block mb-2">
-            Specializing in <span className="text-blue-400 font-semibold">scalable web applications</span>
-          </span>
-          <span className="block text-lg md:text-xl text-gray-400">
-            Building high-performance backend systems that power modern applications
-          </span>
-        </motion.div>
-
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
-        >
-          <motion.a
-            href="#projects"
-            className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center space-x-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>View My Projects</span>
-            <motion.div
-              className="ml-2"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              →
-            </motion.div>
-          </motion.a>
-          <motion.a
-            href="#contact"
-            className="px-8 py-4 border-2 border-blue-400/50 text-blue-300 hover:bg-blue-600/20 hover:border-blue-400 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Let's Connect
-          </motion.a>
-        </motion.div>
-
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto"
-        >
-          <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-            <div className="text-3xl font-bold text-blue-400 mb-1">2+</div>
-            <div className="text-sm text-gray-400">Years Experience</div>
-          </div>
-          <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-            <div className="text-3xl font-bold text-blue-400 mb-1">15+</div>
-            <div className="text-sm text-gray-400">Technologies</div>
-          </div>
-          <div className="text-center p-4 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10">
-            <div className="text-3xl font-bold text-blue-400 mb-1">5+</div>
-            <div className="text-sm text-gray-400">Major Projects</div>
-          </div>
-        </motion.div>
-      </div>
 
       {/* Scroll Indicator */}
       <motion.div

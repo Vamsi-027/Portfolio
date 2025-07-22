@@ -55,88 +55,36 @@ function Projects() {
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <ProjectCard
-            title="RateRateProf"
-            description="A comprehensive professor-rating platform built for scalability and performance"
-            longDescription={[
-              "Developed a full-stack web application using Django and React with focus on user experience and scalability",
-              "Implemented AI-powered search using Elasticsearch for intelligent query processing and instant results",
-              "Utilized Docker containerization and GitHub Actions for automated CI/CD pipeline and seamless deployments",
-              "Deployed on AWS with auto-scaling capabilities to handle traffic spikes and ensure high availability",
-              "Integrated user authentication, rating system, and real-time notifications for enhanced user engagement"
-            ]}
-            technologies={["Django", "React", "Elasticsearch", "Docker", "AWS", "PostgreSQL", "Redis", "GitHub Actions"]}
-            githubUrl="https://github.com/Vamsi-027/RateRateProf"
+            title="Multi-Organ Detection in Laparoscopic Videos Using Diffusion Models"
+            description="Developed and trained multi-organ segmentation and detection models using U-Net and YOLOv11 on the CholecSeg8k dataset. Achieved up to 0.995 mAP50 for critical anatomical structures."
+            longDescription={["Preprocessed and annotated 8,000+ laparoscopic frames, converting semantic masks into YOLO-compatible labels.", "Generated synthetic surgical images using diffusion models to augment training data and improve generalization."]}
+            technologies={["Python", "U-Net", "YOLOv11", "Diffusion Models", "CholecSeg8k"]}
+            githubUrl="#"
+            metrics={{ mAP50: "0.995", frames: "8K+" }}
+            category="Medical AI"
             featured={true}
-            metrics={{ users: "1000+", rating: "4.8/5", uptime: "99.9%" }}
-            category="Full-Stack Web Application"
           />
-
           <ProjectCard
-            title="Warfin Dose Prediction"
-            description="Machine learning system for personalized medicine dosage prediction"
-            longDescription={[
-              "Preprocessed large-scale clinical datasets with 15% improvement in model accuracy through advanced feature engineering",
-              "Developed ML models using KNN, Random Forest, and Neural Networks with comprehensive hyperparameter tuning",
-              "Applied cross-validation and ensemble methods for optimal performance and model reliability",
-              "Enhanced precision and recall metrics by 18% through advanced feature selection and data preprocessing",
-              "Created interactive dashboard for healthcare professionals to input patient data and get dosage recommendations"
-            ]}
-            technologies={["Python", "Scikit-learn", "TensorFlow", "Pandas", "NumPy", "Jupyter", "Flask", "Plotly"]}
-            githubUrl="https://github.com/Vamsi-027/Warfin-Dose-Prediction"
-            metrics={{ accuracy: "92%", improvement: "20%", datasets: "10K+" }}
-            category="Machine Learning & Healthcare"
+            title="Warfarin Dose Prediction"
+            description="Built personalized medicine models using KNN, Random Forest, and Neural Networks, reducing dosage prediction errors by 20%."
+            longDescription={["Preprocessed large-scale clinical datasets, increasing model accuracy by 15%.", "Applied hyperparameter tuning and cross-validation, improving precision and recall by 18%." ]}
+            technologies={["Python", "KNN", "Random Forest", "Neural Networks"]}
+            githubUrl="#"
+            metrics={{ accuracy: "15%+", errorReduction: "20%" }}
+            category="Healthcare ML"
           />
-
           <ProjectCard
-            title="SkillPro"
-            description="Mobile application for streamlined student performance evaluation"
-            longDescription={[
-              "Built cross-platform mobile app using Flutter for iOS and Android with native performance",
-              "Eliminated paper-based documentation with digital evaluation system, saving 80% processing time",
-              "Enabled real-time progress tracking and competency assessment with interactive dashboards",
-              "Integrated analytics dashboard for performance insights and comprehensive reporting features",
-              "Implemented offline-first architecture for seamless usage in areas with poor connectivity"
-            ]}
-            technologies={["Flutter", "Dart", "Firebase", "SQLite", "REST APIs", "Node.js", "Express"]}
-            githubUrl="https://github.com/Vamsi-027/SkillPro"
-            metrics={{ downloads: "500+", rating: "4.6/5", schools: "10+" }}
-            category="Mobile Application"
+            title="RateRatePro"
+            description="Django-React web application for professor ratings, scaling to 2,000+ users. Enhanced query relevance and response times by 35% using Elasticsearch-based AI search."
+            longDescription={["Optimized deployment using Docker and AWS auto-scaling, reducing downtime by 50%.", "Set up GitHub Actions for CI/CD, accelerating deployment cycles by 40%." ]}
+            technologies={["Django", "React", "Elasticsearch", "Docker", "AWS", "CI/CD"]}
+            githubUrl="#"
+            metrics={{ users: "2K+", downtime: "-50%" }}
+            category="Web Application"
           />
-
-          <ProjectCard
-            title="E-Commerce Backend API"
-            description="Scalable REST API for e-commerce platform with advanced features"
-            longDescription={[
-              "Built comprehensive REST API using Node.js and Express with JWT authentication and role-based access control",
-              "Implemented advanced features like product search, filtering, pagination, and real-time inventory management",
-              "Integrated payment gateway (Stripe) and order management system with automated email notifications",
-              "Optimized database queries and implemented caching strategies for improved performance",
-              "Added comprehensive API documentation using Swagger and implemented rate limiting for security"
-            ]}
-            technologies={["Node.js", "Express", "MongoDB", "JWT", "Stripe", "Redis", "Swagger", "Docker"]}
-            githubUrl="https://github.com/Vamsi-027/ecommerce-api"
-            metrics={{ endpoints: "50+", response: "<100ms", uptime: "99.8%" }}
-            category="Backend API Development"
-          />
-
-          <ProjectCard
-            title="Real-Time Chat Application"
-            description="Scalable chat application with WebSocket support and message persistence"
-            longDescription={[
-              "Developed real-time chat application using Socket.io with support for multiple chat rooms and private messaging",
-              "Implemented message persistence using MongoDB with efficient indexing for fast message retrieval",
-              "Added features like typing indicators, message status, file sharing, and emoji reactions",
-              "Built responsive frontend using React with real-time updates and smooth user experience",
-              "Deployed using Docker containers with load balancing for handling concurrent users"
-            ]}
-            technologies={["Socket.io", "React", "Node.js", "MongoDB", "Redis", "Docker", "Nginx"]}
-            githubUrl="https://github.com/Vamsi-027/realtime-chat"
-            metrics={{ users: "2K+", messages: "100K+", latency: "<50ms" }}
-            category="Real-Time Application"
-          />
-        </div>
+        </motion.div>
 
         {/* Call to Action */}
         <motion.div variants={itemVariants} className="text-center mt-16">

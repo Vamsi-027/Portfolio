@@ -157,26 +157,38 @@ function Skills() {
               Specialized areas where I excel and deliver exceptional results
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-              <div className="text-3xl mb-3">🏗️</div>
-              <h4 className="font-semibold mb-2">System Architecture</h4>
-              <p className="text-sm text-blue-100">Designing scalable microservices</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Programming Languages</h3>
+              <div className="flex flex-wrap gap-3">
+                {['Java', 'Python', 'C', 'C++', 'HTML', 'CSS', 'JavaScript'].map(lang => (
+                  <span key={lang} className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">{lang}</span>
+                ))}
+              </div>
             </div>
-            <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-              <div className="text-3xl mb-3">⚡</div>
-              <h4 className="font-semibold mb-2">Performance Optimization</h4>
-              <p className="text-sm text-blue-100">Database tuning & caching</p>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Databases</h3>
+              <div className="flex flex-wrap gap-3">
+                {['MySQL', 'Redis', 'Elasticsearch', 'ArangoDB'].map(db => (
+                  <span key={db} className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">{db}</span>
+                ))}
+              </div>
             </div>
-            <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-              <div className="text-3xl mb-3">🔄</div>
-              <h4 className="font-semibold mb-2">Real-time Systems</h4>
-              <p className="text-sm text-blue-100">WebSockets & message queues</p>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Tools & Frameworks</h3>
+              <div className="flex flex-wrap gap-3">
+                {['Apache Struts', 'Django', 'Apache Kafka', 'REST APIs', 'Git', 'CI/CD'].map(tool => (
+                  <span key={tool} className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">{tool}</span>
+                ))}
+              </div>
             </div>
-            <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-              <div className="text-3xl mb-3">☁️</div>
-              <h4 className="font-semibold mb-2">Cloud Deployment</h4>
-              <p className="text-sm text-blue-100">AWS & containerization</p>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Cloud Platforms</h3>
+              <div className="flex flex-wrap gap-3">
+                {['AWS', 'Google Cloud'].map(cloud => (
+                  <span key={cloud} className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">{cloud}</span>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>

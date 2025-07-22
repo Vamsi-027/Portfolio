@@ -68,8 +68,7 @@ function Contact() {
             Ready to Build Something Amazing?
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I'm always interested in discussing new opportunities, exciting projects, and innovative solutions. 
-            Let's connect and explore how we can work together.
+            I’m always open to discussing new opportunities, challenging projects, and innovative solutions. Let’s connect and explore how I can add value to your team or project.
           </p>
         </motion.div>
 
@@ -96,7 +95,7 @@ function Contact() {
                 <ContactItem
                   icon={FaMapMarkerAlt}
                   title="Location"
-                  content="Chennai, India"
+                  content="2181 Renault Dr, Maryland Heights, Missouri, Saint Louis, USA"
                   description="Open to remote opportunities worldwide"
                 />
               </div>
@@ -158,7 +157,7 @@ function Contact() {
               <h3 className="text-xl font-bold text-white mb-4">Response Time</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">< 24h</div>
+                  <div className="text-2xl font-bold text-blue-400">{'< 24h'}</div>
                   <div className="text-sm text-gray-400">Email Response</div>
                 </div>
                 <div className="text-center">
@@ -261,7 +260,6 @@ function ContactItem({ icon: Icon, title, content, link, description }) {
         <h4 className="font-semibold text-white mb-1">{title}</h4>
         <p className="text-blue-300 font-medium">{content}</p>
         {description && <p className="text-gray-400 text-sm mt-1">{description}</p>}
-        }
       </div>
     </div>
   );
