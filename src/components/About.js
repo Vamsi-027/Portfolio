@@ -149,7 +149,7 @@ function About() {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl transform rotate-6"></div>
               <img
                 src="/images/profile-pic.png"
-                alt="Vamsi Cheruku - Software Engineer"
+                alt="Vamsi Cheruku"
                 className="relative w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-2xl shadow-2xl"
               />
               <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg">

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaGithub, FaExternalLinkAlt, FaStar, FaCode } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaStar } from "react-icons/fa";
 
 function Projects() {
   const { ref, inView } = useInView({
