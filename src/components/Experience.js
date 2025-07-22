@@ -117,11 +117,11 @@ function ExperienceCard({ title, company, duration, description, logo, link }) {
           </a>
         </div>
         <h3 className="text-l font-semibold">{duration}</h3>
-        <p className="text-gray-700 mt-4">
-          <ul>
-            <li>{description}</li>
-          </ul>
-        </p>
+        <ul className="text-gray-700 mt-4 list-disc list-inside">
+          {description.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
       </motion.div>
     </motion.div>
   );
