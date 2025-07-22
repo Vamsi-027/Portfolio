@@ -261,6 +261,7 @@ function ContactItem({ icon: Icon, title, content, link, description }) {
         <h4 className="font-semibold text-white mb-1">{title}</h4>
         <p className="text-blue-300 font-medium">{content}</p>
         {description && <p className="text-gray-400 text-sm mt-1">{description}</p>}
+        }
       </div>
     </div>
   );
