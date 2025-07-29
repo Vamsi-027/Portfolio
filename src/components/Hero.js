@@ -1,30 +1,14 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
-import { FaChevronDown, FaMoon, FaSun, FaRocket, FaChartLine, FaShieldAlt, FaGlobe, FaGithub, FaLinkedin, FaArrowRight } from "react-icons/fa";
+import { FaChevronDown, FaRocket, FaChartLine, FaShieldAlt, FaGlobe, FaGithub, FaLinkedin, FaArrowRight } from "react-icons/fa";
 import { SiPython, SiMysql, SiRedis, SiDocker } from "react-icons/si";
 import { DiJava } from "react-icons/di";
 import { FaAws } from "react-icons/fa";
 
 function Hero() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
-  const [darkMode, setDarkMode] = useState(() =>
-    typeof window !== 'undefined' ? document.documentElement.classList.contains('dark') : false
-  );
   const [currentText, setCurrentText] = useState(0);
-
-  const toggleDarkMode = () => {
-    if (typeof window !== 'undefined') {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        setDarkMode(false);
-      } else {
-        html.classList.add('dark');
-        setDarkMode(true);
-      }
-    }
-  };
 
   // Animated text rotation
   const animatedTexts = [
@@ -86,18 +70,6 @@ function Hero() {
       animate={inView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      {/* Dark/Light Mode Toggle */}
-      <button
-        className="absolute top-8 right-8 z-20 bg-white/10 backdrop-blur-md border border-blue-400 rounded-full p-3 text-blue-400 hover:bg-blue-600/20 transition-all duration-300 hover:scale-110"
-        aria-label="Toggle dark/light mode"
-        onClick={toggleDarkMode}
-      >
-        {darkMode ? (
-          <FaSun size={24} />
-        ) : (
-          <FaMoon size={24} />
-        )}
-      </button>
 
       {/* Hero Content */}
       <div className="flex flex-col items-center justify-center w-full max-w-7xl px-4 py-16 md:py-32 gap-16 relative z-10">
