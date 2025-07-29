@@ -57,32 +57,33 @@ function Projects() {
         {/* Projects Grid */}
         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <ProjectCard
+            title="SaamCars - Inventory Management System"
+            description="Full-stack inventory management application for automotive dealers with real-time stock tracking and image management capabilities. Deployed on Vercel (frontend) and Render (backend)."
+            longDescription={["Built responsive React TypeScript frontend with modern UI/UX for seamless inventory operations.", "Implemented secure Node.js Express backend with PostgreSQL database and Firebase image storage integration."]}
+            technologies={["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Firebase", "Vercel", "Render"]}
+            githubUrls={{ Frontend: "https://github.com/vamsi-rebounz/SaamCars-FE", Backend: "https://github.com/vamsi-rebounz/SamCars-BE" }}
+            liveUrl="https://www.saamcars.com"
+            metrics={{ deployment: "Live", storage: "Firebase" }}
+            category="Full-Stack"
+            featured={true}
+          />
+          <ProjectCard
             title="Multi-Organ Detection in Laparoscopic Videos Using Diffusion Models"
             description="Developed and trained multi-organ segmentation and detection models using U-Net and YOLOv11 on the CholecSeg8k dataset. Achieved up to 0.995 mAP50 for critical anatomical structures."
             longDescription={["Preprocessed and annotated 8,000+ laparoscopic frames, converting semantic masks into YOLO-compatible labels.", "Generated synthetic surgical images using diffusion models to augment training data and improve generalization."]}
             technologies={["Python", "U-Net", "YOLOv11", "Diffusion Models", "CholecSeg8k"]}
-            githubUrl="#"
+            githubUrl="https://github.com/nagatharun/Enhance-Data-Diversity-and-Robustness"
             metrics={{ mAP50: "0.995", frames: "8K+" }}
             category="Medical AI"
-            featured={true}
           />
           <ProjectCard
             title="Warfarin Dose Prediction"
             description="Built personalized medicine models using KNN, Random Forest, and Neural Networks, reducing dosage prediction errors by 20%."
             longDescription={["Preprocessed large-scale clinical datasets, increasing model accuracy by 15%.", "Applied hyperparameter tuning and cross-validation, improving precision and recall by 18%." ]}
             technologies={["Python", "KNN", "Random Forest", "Neural Networks"]}
-            githubUrl="#"
+            githubUrl="https://github.com/Vamsi-027/Warfin-Dose-Prediction"
             metrics={{ accuracy: "15%+", errorReduction: "20%" }}
             category="Healthcare ML"
-          />
-          <ProjectCard
-            title="RateRatePro"
-            description="Django-React web application for professor ratings, scaling to 2,000+ users. Enhanced query relevance and response times by 35% using Elasticsearch-based AI search."
-            longDescription={["Optimized deployment using Docker and AWS auto-scaling, reducing downtime by 50%.", "Set up GitHub Actions for CI/CD, accelerating deployment cycles by 40%." ]}
-            technologies={["Django", "React", "Elasticsearch", "Docker", "AWS", "CI/CD"]}
-            githubUrl="#"
-            metrics={{ users: "2K+", downtime: "-50%" }}
-            category="Web Application"
           />
         </motion.div>
 
@@ -112,6 +113,7 @@ function ProjectCard({
   longDescription, 
   technologies, 
   githubUrl, 
+  githubUrls = {},
   liveUrl, 
   featured = false,
   metrics = {},
@@ -191,22 +193,43 @@ function ProjectCard({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex space-x-4">
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300"
-          >
-            <FaGithub />
-            <span>View Code</span>
-          </a>
+        <div className="flex flex-col space-y-3">
+          {Object.keys(githubUrls).length > 0 ? (
+            // Multiple GitHub repositories
+            <>
+              {Object.entries(githubUrls).map(([label, url]) => (
+                <a
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300"
+                >
+                  <FaGithub />
+                  <span>{label}</span>
+                </a>
+              ))}
+            </>
+          ) : (
+            // Single GitHub repository
+            githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300"
+              >
+                <FaGithub />
+                <span>View Code</span>
+              </a>
+            )
+          )}
           {liveUrl && (
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300"
+              className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-300"
             >
               <FaExternalLinkAlt />
               <span>Live Demo</span>

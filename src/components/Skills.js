@@ -149,71 +149,27 @@ function Skills() {
           ))}
         </div>
 
-        {/* Core Competencies */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4">Core Competencies</h3>
-            <p className="text-blue-100 max-w-2xl mx-auto">
-              Specialized areas where I excel and deliver exceptional results
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Programming Languages</h3>
-              <div className="flex flex-wrap gap-3">
-                {['Java', 'Python', 'C', 'C++', 'HTML', 'CSS', 'JavaScript'].map(lang => (
-                  <span key={lang} className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">{lang}</span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Databases</h3>
-              <div className="flex flex-wrap gap-3">
-                {['MySQL', 'Redis', 'Elasticsearch', 'ArangoDB'].map(db => (
-                  <span key={db} className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">{db}</span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Tools & Frameworks</h3>
-              <div className="flex flex-wrap gap-3">
-                {['Apache Struts', 'Django', 'Apache Kafka', 'REST APIs', 'Git', 'CI/CD'].map(tool => (
-                  <span key={tool} className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">{tool}</span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Cloud Platforms</h3>
-              <div className="flex flex-wrap gap-3">
-                {['AWS', 'Google Cloud'].map(cloud => (
-                  <span key={cloud} className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">{cloud}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Learning & Growth */}
-        <motion.div variants={itemVariants} className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+        <motion.div variants={itemVariants} className="text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+            <h3 className="text-2xl font-bold mb-4">
               Continuous Learning
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
               Technology evolves rapidly, and I'm committed to staying current with the latest trends, 
               frameworks, and best practices in software development.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <span className="px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium shadow-sm border border-gray-200">
+              <span className="px-4 py-2 bg-white/20 text-white rounded-full text-sm font-medium backdrop-blur-sm">
                 Distributed Systems
               </span>
-              <span className="px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium shadow-sm border border-gray-200">
+              <span className="px-4 py-2 bg-white/20 text-white rounded-full text-sm font-medium backdrop-blur-sm">
                 Machine Learning
               </span>
-              <span className="px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium shadow-sm border border-gray-200">
+              <span className="px-4 py-2 bg-white/20 text-white rounded-full text-sm font-medium backdrop-blur-sm">
                 GraphQL
               </span>
-              <span className="px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium shadow-sm border border-gray-200">
+              <span className="px-4 py-2 bg-white/20 text-white rounded-full text-sm font-medium backdrop-blur-sm">
                 Serverless Architecture
               </span>
             </div>

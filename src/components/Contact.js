@@ -3,9 +3,11 @@ import { useState } from "react";
 import { FaEnvelope, FaLinkedin, FaGithub, FaMapMarkerAlt, FaPhone, FaPaperPlane } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { useInView } from "react-intersection-observer";
+import { useAlert } from "../App";
 
 function Contact() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+  const { showSuccess, showError } = useAlert();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -42,12 +44,46 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = encodeURIComponent(formData.subject || 'Opportunity Discussion - Portfolio Contact');
-    const body = encodeURIComponent(
-      `Hi Vamsi,\n\nI came across your portfolio and I'm impressed with your backend development expertise.\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}\n\nLooking forward to connecting with you!\n\nBest regards,\n${formData.name}`
-    );
-    window.location.href = `mailto:vamsicheruku027@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Validate form data
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      showError("Please fill in all required fields (Name, Email, and Message)", 4000);
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      showError("Please enter a valid email address", 4000);
+      return;
+    }
+
+    try {
+      // Create mailto link with form data
+      const subject = encodeURIComponent(formData.subject || 'Opportunity Discussion - Portfolio Contact');
+      const body = encodeURIComponent(
+        `Hi Vamsi,\n\nI came across your portfolio and I'm impressed with your backend development expertise.\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}\n\nLooking forward to connecting with you!\n\nBest regards,\n${formData.name}`
+      );
+      
+      // Show success message
+      showSuccess("Thank you! Opening your email client to send the message...", 3000);
+      
+      // Clear form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      
+      // Open email client after a short delay
+      setTimeout(() => {
+        window.location.href = `mailto:vamsicheruku027@gmail.com?subject=${subject}&body=${body}`;
+      }, 1000);
+      
+    } catch (error) {
+      showError("Something went wrong. Please try again or contact me directly at vamsicheruku027@gmail.com", 5000);
+    }
   };
 
   return (
@@ -126,44 +162,6 @@ function Contact() {
                   color="hover:bg-orange-500"
                   description="Coding practice"
                 />
-              </div>
-            </div>
-
-            {/* Why Work With Me */}
-            <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">Why Work With Me?</h3>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-300">2+ years of proven experience at Zoho Corporation</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-300">Expertise in scalable backend systems & microservices</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-300">Strong problem-solving and optimization skills</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-300">Passionate about clean code and best practices</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Response Time */}
-            <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl p-6 border border-blue-400/20">
-              <h3 className="text-xl font-bold text-white mb-4">Response Time</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">{'< 24h'}</div>
-                  <div className="text-sm text-gray-400">Email Response</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">100%</div>
-                  <div className="text-sm text-gray-400">Commitment</div>
-                </div>
               </div>
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaLinkedin, FaGithub, FaDownload, FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaDownload, FaMapMarkerAlt, FaEnvelope, FaPhone, FaRocket, FaChartLine, FaShieldAlt, FaGlobe } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { useInView } from "react-intersection-observer";
 
@@ -28,6 +28,13 @@ function About() {
       transition: { duration: 0.8, ease: "easeOut" },
     },
   };
+
+  const stats = [
+    { number: "2+", label: "Years Experience", icon: FaChartLine },
+    { number: "40%", label: "Performance Boost", icon: FaRocket },
+    { number: "50%", label: "Downtime Reduction", icon: FaShieldAlt },
+    { number: "1M+", label: "Messages/Day", icon: FaGlobe },
+  ];
 
   return (
     <section
@@ -60,7 +67,7 @@ function About() {
             </div>
             <motion.div variants={itemVariants} className="space-y-6 text-gray-700 text-lg leading-relaxed">
               <p>
-                I’m <span className="font-semibold text-gray-900">Vamsi Cheruku</span>, a backend engineer passionate about building scalable, reliable, and high-impact systems. My journey began with a love for problem-solving and has led me to architect mission-critical applications at <span className="font-semibold text-blue-600">Zoho Corporation</span> and beyond.
+                I'm a backend engineer passionate about building scalable, reliable, and high-impact systems. My journey began with a love for problem-solving and has led me to architect mission-critical applications at <a href="https://www.zoho.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-600 hover:text-blue-700 underline">Zoho Corporation</a> and beyond.
               </p>
               <p>
                 I believe great engineering is about clarity, collaboration, and continuous improvement. I thrive on designing systems that are robust, maintainable, and deliver measurable results for users and businesses.
@@ -69,26 +76,8 @@ function About() {
                 <span className="font-semibold">Soft skills:</span> Teamwork, reliability, and a growth mindset.
               </p>
             </motion.div>
-            {/* Key Achievements */}
-            <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-6 py-6">
-              <div className="text-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="text-3xl font-bold text-blue-600 mb-1">2+</div>
-                <div className="text-sm text-gray-500 font-medium">Years Experience</div>
-              </div>
-              <div className="text-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="text-3xl font-bold text-blue-600 mb-1">8K+</div>
-                <div className="text-sm text-gray-500 font-medium">Frames Annotated</div>
-              </div>
-              <div className="text-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="text-3xl font-bold text-blue-600 mb-1">1M+</div>
-                <div className="text-sm text-gray-500 font-medium">Messages/Day</div>
-              </div>
-              <div className="text-center p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="text-3xl font-bold text-blue-600 mb-1">40%</div>
-                <div className="text-sm text-gray-500 font-medium">Performance Boost</div>
-              </div>
-            </motion.div>
-            {/* Contact Info & Resume */}
+            
+            {/* Resume Download */}
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-6 items-center">
               <a
                 href="https://drive.google.com/file/d/1Ic1DF0AZ9FKnnwCnxWRlvdV3YLHXFvro/view?usp=sharing"
@@ -103,49 +92,44 @@ function About() {
                 href="https://leetcode.com/18pa1a0531/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-orange-500 hover:text-white hover:border-orange-500 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm ml-2"
+                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-orange-500 hover:text-white hover:border-orange-500 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
                 aria-label="LeetCode"
               >
                 <SiLeetcode size={20} />
               </a>
               <a
                 href="mailto:vamsicheruku027@gmail.com"
-                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-green-600 hover:text-white hover:border-green-600 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm ml-2"
+                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-red-500 hover:text-white hover:border-red-500 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
                 aria-label="Email"
               >
                 <FaEnvelope size={20} />
               </a>
-              <div className="flex space-x-4">
-                <a
-                  href="https://www.linkedin.com/in/vamsi-cheruku-05a19a1b4/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
-                >
-                  <FaLinkedin size={20} />
-                </a>
-                <a
-                  href="https://github.com/Vamsi-027"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-gray-800 hover:text-white hover:border-gray-800 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
-                >
-                  <FaGithub size={20} />
-                </a>
-              </div>
-              <div className="flex flex-col space-y-1 text-gray-700 text-base ml-4">
-                <div><span className="font-semibold">Location:</span> 2181 Renault Dr, Maryland Heights, Missouri, Saint Louis, USA</div>
-                <div><span className="font-semibold">Email:</span> vamsicheruku027@gmail.com</div>
-                <div><span className="font-semibold">Phone:</span> +1 (314) 358-6905</div>
-              </div>
-              <span className="inline-flex items-center px-3 py-1 bg-green-600/20 text-green-600 rounded-full text-sm ml-4">
+              <a
+                href="https://github.com/Vamsi-027"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-gray-800 hover:text-white hover:border-gray-800 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
+                aria-label="GitHub"
+              >
+                <FaGithub size={20} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/vamsi-cheruku-05a19a1b4/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white border border-gray-200 text-gray-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 rounded-xl transition-all duration-300 transform hover:scale-110 shadow-sm"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={20} />
+              </a>
+              <span className="inline-flex items-center px-3 py-1 bg-green-600/20 text-green-600 rounded-full text-sm">
                 <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
                 Open to new opportunities
               </span>
             </motion.div>
           </motion.div>
 
-          {/* Right: Professional Image & Stats */}
+          {/* Right: Professional Image */}
           <motion.div 
             variants={itemVariants}
             className="flex justify-center lg:justify-end"
@@ -158,30 +142,30 @@ function About() {
               {/* Main image container */}
               <div className="relative bg-white p-2 rounded-3xl shadow-2xl">
                 <img
-                  src="/images/profile-pic.png"
-                  alt="Vamsi Cheruku professional headshot"
+                  src="/images/profile-pic.jpg"
+                  alt="Professional headshot"
                   className="w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-2xl border-4 border-white/20 shadow-2xl"
                 />
                 
                 {/* Floating stats cards */}
-                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+                <div className="absolute -top-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-blue-600">2+</div>
-                    <div className="text-xs text-gray-500 font-medium">Years at Zoho</div>
+                    <div className="text-xs text-gray-500 font-medium">Years Experience</div>
                   </div>
                 </div>
                 
-                <div className="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">40%</div>
                     <div className="text-xs text-gray-500 font-medium">Performance Boost</div>
                   </div>
                 </div>
                 
-                <div className="absolute top-1/2 -right-8 bg-white p-3 rounded-xl shadow-lg border border-gray-100">
+                <div className="absolute top-1/2 -right-8 transform -translate-y-1/2 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
                   <div className="text-center">
-                    <div className="text-xl font-bold text-purple-600">1M+</div>
-                    <div className="text-xs text-gray-500 font-medium">Messages/Day</div>
+                    <div className="text-2xl font-bold text-purple-600">50%</div>
+                    <div className="text-xs text-gray-500 font-medium">Downtime Reduction</div>
                   </div>
                 </div>
               </div>

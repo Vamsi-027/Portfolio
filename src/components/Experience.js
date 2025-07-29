@@ -101,29 +101,6 @@ function Experience() {
             />
           </div>
         </div>
-
-        {/* Key Achievements Summary */}
-        <motion.div variants={itemVariants} className="mt-20 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Key Achievements at Zoho</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-              <div className="text-3xl font-bold text-blue-600 mb-2">10K+</div>
-              <div className="text-sm text-gray-600">Concurrent Users Supported</div>
-            </div>
-            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-              <div className="text-3xl font-bold text-green-600 mb-2">40%</div>
-              <div className="text-sm text-gray-600">Response Time Improvement</div>
-            </div>
-            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-              <div className="text-3xl font-bold text-purple-600 mb-2">1M+</div>
-              <div className="text-sm text-gray-600">Messages Processed Daily</div>
-            </div>
-            <div className="text-center p-4 bg-white rounded-xl shadow-sm">
-              <div className="text-3xl font-bold text-orange-600 mb-2">99.9%</div>
-              <div className="text-sm text-gray-600">System Uptime</div>
-            </div>
-          </div>
-        </motion.div>
       </motion.div>
     </section>
   );

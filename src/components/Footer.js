@@ -92,7 +92,7 @@ function Footer() {
             <div className="space-y-3 text-gray-400">
               <div>
                 <p className="font-medium text-white">Location</p>
-                <p>Chennai, India</p>
+                <p>Saint Louis, USA</p>
               </div>
               <div>
                 <p className="font-medium text-white">Email</p>
