@@ -59,13 +59,20 @@ function Header() {
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <motion.div
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent cursor-pointer select-none"
+              className="flex items-center space-x-3 cursor-pointer select-none"
               whileHover={{ scale: 1.05 }}
               onClick={() => handleNavClick('#home')}
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && handleNavClick('#home')}
             >
-              Vamsi Cheruku
+              <img 
+                src="/logo.png" 
+                alt="Vamsi Cheruku Logo" 
+                className="w-8 h-8 rounded-lg shadow-sm"
+              />
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                Vamsi Cheruku
+              </span>
             </motion.div>
 
             {/* Desktop Navigation */}

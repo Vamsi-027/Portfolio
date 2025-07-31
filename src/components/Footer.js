@@ -18,9 +18,16 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              Vamsi Cheruku
-            </h3>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/logo.png" 
+                alt="Vamsi Cheruku Logo" 
+                className="w-8 h-8 rounded-lg shadow-sm"
+              />
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                Vamsi Cheruku
+              </h3>
+            </div>
             <p className="text-gray-400 leading-relaxed">
               Backend Developer specializing in scalable web applications. 
               Passionate about building robust systems that power modern applications 
