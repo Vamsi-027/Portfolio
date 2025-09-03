@@ -1,20 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        pixelify: ["Pixelify Sans", "cursive"],
-        silkscreen: ["Silkscreen", "sans-serif"],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'float': 'float 3s ease-in-out infinite',
+        'pulse-green': 'pulse-green 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -29,6 +29,10 @@ module.exports = {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        'pulse-green': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.3' },
+        },
       },
       colors: {
         primary: {
@@ -38,8 +42,10 @@ module.exports = {
           700: '#1d4ed8',
         },
       },
+      backdropBlur: {
+        xs: '2px',
+      }
     },
   },
   plugins: [],
 }
-
