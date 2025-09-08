@@ -1,3 +1,14 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Allow: /
+
+# *
+User-agent: *
+Disallow: /admin
+Disallow: /api/*
+
+# Host
+Host: https://vamsicheruku.dev
+
+# Sitemaps
+Sitemap: https://vamsicheruku.dev/sitemap.xml

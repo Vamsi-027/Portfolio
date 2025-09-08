@@ -1,17 +1,17 @@
-'use client'
-
-import HeroStatus from '../components/HeroStatus'
-import MissionLog from '../components/MissionLog'
-import Directives from '../components/Directives'
-import CommsLink from '../components/CommsLink'
+import TerminalHero from '../components/TerminalHero'
+import Impact from '../components/Impact'
+import Experience from '../components/Experience'
+import Expertise from '../components/Expertise'
+import Contact from '../components/Contact'
 
 export default function Home() {
   return (
-    <div className="space-y-0">
-      <HeroStatus />
-      <MissionLog />
-      <Directives />
-      <CommsLink />
+    <div className="min-h-screen">
+      <TerminalHero />
+      <Impact />
+      <Experience />
+      <Expertise />
+      <Contact />
     </div>
   )
 }

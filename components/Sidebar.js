@@ -3,11 +3,12 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { FaGithub, FaLinkedin, FaEnvelope, FaTerminal, FaCode, FaRocket, FaComments } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaTerminal, FaCode, FaBriefcase, FaRocket, FaComments } from 'react-icons/fa'
 
 const navigationItems = [
   { id: 'status', label: 'Professional Overview', icon: FaTerminal },
   { id: 'mission-log', label: 'Engineering Projects', icon: FaCode },
+  { id: 'experience', label: 'Professional Experience', icon: FaBriefcase },
   { id: 'directives', label: 'Technical Expertise', icon: FaRocket },
   { id: 'comms', label: 'Contact & Resume', icon: FaComments },
 ]

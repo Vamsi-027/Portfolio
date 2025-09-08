@@ -5,91 +5,85 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Development
-- `npm start` - Start development server (React app)
+- `npm run dev` - Start Next.js development server
 - `npm run build` - Build production bundle
-- `npm test` - Run test suite with Jest
-- `npm run eject` - Eject from create-react-app (irreversible)
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
 
 ### Linting & Code Quality
-- No specific lint command configured - uses ESLint through react-scripts with "react-app" and "react-app/jest" configs
+- ESLint configured with `eslint-config-next`
 
 ## Architecture Overview
 
 ### Tech Stack
-- **Frontend Framework**: React 19.0.0 with functional components and hooks
+- **Frontend Framework**: Next.js 14 with React 18 (App Router)
 - **Styling**: TailwindCSS with custom theme configuration
 - **Animations**: Framer Motion for page transitions and component animations
-- **Icons**: React Icons (Font Awesome, Simple Icons, Devicons)
-- **Lottie**: Lottie-react for animated graphics (tech stack icons in `/src/lottie/`)
-- **Build Tool**: Create React App (react-scripts 5.0.1)
-- **Intersection Observer**: react-intersection-observer for scroll-triggered animations
+- **Icons**: React Icons (Font Awesome)
+- **Build Tool**: Next.js
+- **Image Optimization**: Next.js Image component with remote patterns for Google Drive
 
 ### Project Structure
 ```
-src/
-├── components/           # React components (functional with hooks)
-│   ├── Hero.js          # Landing hero section with animated text rotation
-│   ├── About.js         # About me section
-│   ├── Skills.js        # Skills showcase with progress bars
-│   ├── Projects.js      # Project portfolio
+├── app/
+│   ├── layout.js        # Root layout with Sidebar
+│   ├── page.js          # Home page with main sections
+│   └── globals.css      # Global Tailwind styles
+├── components/
+│   ├── HeroStatus.js    # Landing hero with typing animation and profile
+│   ├── MissionLog.js    # Projects/portfolio section
 │   ├── Experience.js    # Work experience timeline
-│   ├── Contact.js       # Contact form
-│   ├── Header.js        # Navigation header
-│   ├── Footer.js        # Footer component
-│   ├── CustomAlert.js   # Alert system with context
-│   ├── ScrollToTop.js   # Scroll to top functionality
-│   └── NetworkAccessNotice.js
-├── lottie/              # Lottie animation files (JSON)
-├── App.js              # Main app component with AlertContext
-├── index.js            # React app entry point
-└── App.css, index.css  # Global styles
+│   ├── Directives.js    # Skills and technical expertise
+│   ├── CommsLink.js     # Contact section
+│   └── Sidebar.js       # Fixed navigation sidebar
+└── public/images/       # Static assets
 ```
 
 ### Key Architectural Patterns
 
-#### Context-Based Alert System
-- `AlertContext` in App.js provides global alert management
-- `useCustomAlert` hook from CustomAlert.js for alert operations
-- Components can trigger alerts via `useAlert()` hook
+#### Layout Architecture
+- Next.js App Router with `app/layout.js` providing root layout
+- Fixed sidebar navigation with `Sidebar.js` component
+- Main content area with responsive design (`ml-64` offset for sidebar)
+- Smooth scroll behavior enabled globally
 
 #### Animation Architecture
-- Framer Motion used throughout for page transitions
-- `useInView` hook for scroll-triggered animations with `triggerOnce: true`
-- Custom Tailwind animations (fade-in, slide-up, float) defined in `tailwind.config.js`
-- Staggered children animations in container components
+- Framer Motion used throughout for page transitions and micro-interactions
+- Motion variants pattern with staggered children animations
+- Custom Tailwind animations (fade-in, slide-up, float, pulse-green) in `tailwind.config.js`
+- Typing animations and dynamic text effects in hero section
 
 #### Component Patterns
-- All components are functional with React hooks
-- Consistent use of `useInView` from react-intersection-observer
-- Motion variants pattern for consistent animation timing
-- Icon components from react-icons with consistent styling
+- All components use 'use client' directive (client-side rendering)
+- Functional components with React hooks (useState, useEffect)
+- Motion components from Framer Motion for animations
+- Consistent icon usage from react-icons/fa
 
 #### Styling Approach
 - TailwindCSS with custom theme extensions
-- Dark mode support configured (`darkMode: 'class'`)
-- Custom fonts: Inter (default), Pixelify Sans, Silkscreen
-- Gradient backgrounds and glassmorphism effects
+- Inter font family as default
+- Custom color palette with primary blues
+- Gradient backgrounds and glass-morphism effects
 - Responsive design with mobile-first approach
 
 ### Notable Implementation Details
 
-#### Hero Section (`Hero.js`)
-- Text rotation animation with 3-second intervals
-- Floating tech icons with individual animation delays
-- Smooth scroll navigation to other sections
-- Performance stats display with animated counters
+#### HeroStatus Component (`HeroStatus.js`)
+- Dynamic typing animation rotating through backend engineering keywords
+- Real-time system status simulation with pulse effects
+- Performance badges with metrics (uptime, scale, performance improvements)
+- Professional photo with overlay badges and live indicators
 
-#### Skills Section (`Skills.js`)
-- Categorized skill display with progress bars
-- Individual skill items with staggered animations
-- Experience indicators for each technology
-- Animated progress bars that fill on scroll
+#### Sidebar Navigation (`Sidebar.js`)
+- Fixed positioning with active section tracking via scroll
+- Real-time UTC clock display
+- Professional branding with logo and status indicators
+- Social links with hover animations
 
-#### Tailwind Configuration
-- Custom color palette with primary blues
-- Extended animations and keyframes
-- Custom font families for branding
-- Responsive breakpoint usage throughout components
+#### Tailwind Configuration (`tailwind.config.js`)
+- Custom animations: fade-in, slide-up, float, pulse-green
+- Extended color palette with primary blue variants
+- Custom keyframe definitions for smooth animations
 
 ### Portfolio Content
 This is Vamsi Cheruku's personal portfolio showcasing:
