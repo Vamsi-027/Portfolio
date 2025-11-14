@@ -228,7 +228,7 @@ export default function TerminalHero() {
           </motion.button>
 
           <motion.a
-            href="https://drive.google.com/file/d/1Ic1DF0AZ9FKnnwCnxWRlvdV3YLHXFvro/view?usp=sharing"
+            href="https://drive.google.com/file/d/13-sjCHM2lqgB5vPldlglvLq82Ulf3U7S/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center space-x-3 border-2 border-slate-600/50 bg-slate-800/50 text-slate-200 px-8 py-4 rounded-2xl font-semibold text-base hover:bg-slate-700/50 hover:border-slate-500/70 hover:text-white transition-all duration-300 shadow-xl min-h-[56px] min-w-[200px] backdrop-blur-sm overflow-hidden"

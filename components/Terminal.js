@@ -80,7 +80,7 @@ Use 'cd <project>' to explore or scroll down to see detailed case studies.`,
     description: 'Download resume',
     execute: () => {
       // Trigger resume download
-      window.open('https://drive.google.com/file/d/15VPBnEDxgSEzjsk1cRxNe4bd-mY6Q0WY/view?usp=drive_link', '_blank')
+      window.open('https://drive.google.com/file/d/13-sjCHM2lqgB5vPldlglvLq82Ulf3U7S/view?usp=sharing', '_blank')
       return {
         output: `📄 resume.pdf
    

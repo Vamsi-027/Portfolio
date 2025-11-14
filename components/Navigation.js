@@ -162,7 +162,7 @@ export default function Navigation() {
               </div>
               
               <motion.a
-                href="https://drive.google.com/file/d/1Ic1DF0AZ9FKnnwCnxWRlvdV3YLHXFvro/view?usp=sharing"
+                href="https://drive.google.com/file/d/13-sjCHM2lqgB5vPldlglvLq82Ulf3U7S/view"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, x: 20 }}
@@ -291,7 +291,7 @@ export default function Navigation() {
                     
                     {/* Resume Button */}
                     <a
-                      href="https://drive.google.com/file/d/1Ic1DF0AZ9FKnnwCnxWRlvdV3YLHXFvro/view?usp=sharing"
+                      href="https://drive.google.com/file/d/13-sjCHM2lqgB5vPldlglvLq82Ulf3U7S/view"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-4 py-3 rounded-lg text-base font-medium hover:from-primary-700 hover:to-primary-800 transition-all duration-200"

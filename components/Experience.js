@@ -569,7 +569,7 @@ export default function Experience() {
               </motion.button>
               
               <motion.a
-                href="https://drive.google.com/file/d/15VPBnEDxgSEzjsk1cRxNe4bd-mY6Q0WY/view?usp=drive_link"
+                href="https://drive.google.com/file/d/13-sjCHM2lqgB5vPldlglvLq82Ulf3U7S/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 border-2 border-white/30 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all duration-200"
