@@ -92,7 +92,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body 
-        className={`${inter.className} antialiased bg-neutral-50 text-neutral-900 overflow-x-hidden`}
+        className={`${inter.className} antialiased bg-background text-foreground overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
         {/* Skip to main content for accessibility */}
