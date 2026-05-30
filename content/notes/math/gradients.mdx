@@ -1,0 +1,53 @@
+---
+title: "Vector Gradients and Jacobians Reference"
+date: "2026-05-15"
+category: "math"
+description: "Basic formulas for multivariate vector derivatives, Jacobian matrices, and matrix calculus operations."
+tags: ["math", "calculus", "gradients"]
+---
+In neural network calculus, weights and activations are tensors. This sheet serves as a reference for vector-valued derivatives and Jacobian dimensions.
+
+### Definitions
+
+Let `x` be a vector of shape `[n, 1]`, and `y = f(x)` be a scalar-valued function. The gradient `dy/dx` is a vector of shape `[n, 1]` containing the partial derivatives:
+
+`dy/dx = [dy/dx_1, dy/dx_2, ..., dy/dx_n]^T`
+
+If `y = f(x)` is a vector-valued function of shape `[m, 1]`, the derivative `dy/dx` is a **Jacobian matrix** of shape `[m, n]`:
+
+```
+J = [
+  [dy_1/dx_1, dy_1/dx_2, ..., dy_1/dx_n],
+  [dy_2/dx_1, dy_2/dx_2, ..., dy_2/dx_n],
+  ...
+  [dy_m/dx_1, dy_m/dx_2, ..., dy_m/dx_n]
+]
+```
+
+### Essential Matrix Identities
+
+For vectors `x`, `a` and matrix `W`:
+
+1. **Linear Vector Product**:
+   `y = a^T * x` (scalar)
+   `dy/dx = a`
+
+2. **Matrix Vector Product**:
+   `y = W * x` (vector)
+   `dy/dx = W` (Jacobian matrix)
+
+3. **Quadratic Form**:
+   `y = x^T * A * x` (scalar)
+   `dy/dx = (A + A^T) * x`
+
+### Chain Rule for Vectors
+
+If `z = g(y)` and `y = f(x)` are vector-valued functions, the Jacobian matrix of `z` with respect to `x` is the multiplication of the individual Jacobians:
+
+`dz/dx = dz/dy * dy/dx`
+
+Shape validation:
+- `dz/dx` shape: `[dim(z), dim(x)]`
+- `dz/dy` shape: `[dim(z), dim(y)]`
+- `dy/dx` shape: `[dim(y), dim(x)]`
+- Product shape: `[dim(z), dim(y)] * [dim(y), dim(x)] = [dim(z), dim(x)]`

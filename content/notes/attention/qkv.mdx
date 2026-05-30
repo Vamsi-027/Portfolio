@@ -1,0 +1,45 @@
+---
+title: "Query, Key, and Value Projection Dimensions"
+date: "2026-05-18"
+category: "attention"
+description: "Dimensional matrix shapes, projections, and dot-product calculations in self-attention layers."
+tags: ["attention", "dimensions", "math"]
+---
+Self-Attention transforms input sequences via three matrix projections. Here is the mathematical summary of query, key, and value transformations.
+
+### Projection Equations
+
+Given input sequence matrix `X` of shape `[Batch, SequenceLength, d_model]`, we project it using three weight matrices:
+
+```
+Q = X * W_q
+K = X * W_k
+V = X * W_v
+```
+
+### Parameter Shapes and Bounds
+
+For a single attention head:
+
+| Matrix / Tensor | Symbol | Typical Shape | Description |
+| :--- | :--- | :--- | :--- |
+| Input | `X` | `[B, T, C]` | `B` = batch size, `T` = sequence length, `C` = `d_model` |
+| Query Weights | `W_q` | `[C, d_k]` | Projector matrix for queries |
+| Key Weights | `W_k` | `[C, d_k]` | Projector matrix for keys |
+| Value Weights | `W_v` | `[C, d_v]` | Projector matrix for values |
+| Queries | `Q` | `[B, T, d_k]` | Output query vectors |
+| Keys | `K` | `[B, T, d_k]` | Output key vectors |
+| Values | `V` | `[B, T, d_v]` | Output value vectors |
+
+Note: Usually, `d_k = d_v = d_model / num_heads`.
+
+### Dot-Product Math
+
+The attention weights matrix `A` is calculated as:
+
+`A = Softmax( (Q * K^T) / sqrt(d_k) )`
+
+Where:
+- `Q * K^T` is the matrix multiplication of shapes `[B, T, d_k]` and `[B, d_k, T]`, resulting in a shape of `[B, T, T]`.
+- We apply `Softmax` over the last dimension (the columns).
+- The final context output matrix `O = A * V` has shape `[B, T, d_v]`.

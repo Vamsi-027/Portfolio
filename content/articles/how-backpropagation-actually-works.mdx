@@ -1,0 +1,71 @@
+---
+title: "How Backpropagation Actually Works: A Geometric Derivation"
+date: "2026-05-16"
+stage: "Stage 1"
+category: "math"
+description: "Demystifying the backpropagation algorithm. Rather than an opaque code routine, backprop is a reverse-mode gradient tracking process using matrix calculus."
+tags: ["backpropagation", "calculus", "gradients", "deep-learning"]
+resources: ["3Blue1Brown Deep Learning Series - https://youtu.be/LPZh9BOjkQs", "Matrix Calculus Reference - https://matrixcookbook.com"]
+---
+Backpropagation is often presented as a complex code routine or a set of four confusing formulas. In reality, it is a elegant application of the chain rule from calculus, tracking the sensitivity of a cost function to every weight and bias in a network.
+
+### The Network Graph
+
+Consider a simple neural network where layers are stacked sequentially. For a single neuron in layer `L`, its output `a` (activation) is computed from the activations of the previous layer `L-1`:
+
+```
+z^L = w^L * a^(L-1) + b^L
+a^L = o(z^L)
+```
+
+where:
+- `w^L` is the weight matrix connecting layer `L-1` to `L`.
+- `b^L` is the bias vector for layer `L`.
+- `z^L` is the weighted input vector.
+- `o` (sigma) is the activation function (like Sigmoid or ReLU).
+
+For a training sample, let the loss be `C`. We want to compute the partial derivatives:
+
+- `dC/dw^L`
+- `dC/db^L`
+
+### The Core Derivation
+
+To find these derivatives, we define an intermediate error term for each neuron, which we'll denote as `delta^L` (or the gradient of the loss with respect to the pre-activation input `z^L`):
+
+`delta^L = dC/dz^L`
+
+Using the chain rule, we can express `delta^L` in terms of the error at the next layer `delta^(L+1)`. Let's step backward through the network:
+
+1. **Output Layer Error (`L = H`)**:
+   `delta^H = dC/da^H * o'(z^H)`
+   
+   If we use Mean Squared Error where `C = 0.5 * (a^H - y)^2`, then `dC/da^H = (a^H - y)`. Therefore:
+   `delta^H = (a^H - y) * o'(z^H)`
+
+2. **Error Propagation (Backwards step)**:
+   To compute the error at layer `L` using the error at `L+1`, we track how changing `z^L` changes the loss:
+   `dC/dz^L = sum_k (dC/dz_k^(L+1) * dz_k^(L+1)/dz^L)`
+   
+   Since `z_k^(L+1) = sum_j (w_kj^(L+1) * o(z_j^L)) + b_k^(L+1)`, we have:
+   `dz_k^(L+1)/dz^L = w_k^(L+1) * o'(z^L)`
+   
+   Substituting this back, we get:
+   `delta^L = ((w^(L+1))^T * delta^(L+1)) * o'(z^L)`
+
+   Here, `*` represents the Hadamard (element-wise) product, and `^T` is the matrix transpose.
+
+3. **Computing Weights and Biases Gradients**:
+   Now that we have `delta^L = dC/dz^L`, computing the gradients with respect to parameters is direct:
+   - `dC/dw^L = delta^L * (a^(L-1))^T`
+   - `dC/db^L = delta^L`
+
+### System Implications
+
+In frameworks like PyTorch or JAX, backpropagation is implemented via reverse-mode automatic differentiation. Instead of building analytic formulas, the library constructs a directed acyclic graph (DAG) during the forward pass. Every node in the DAG keeps track of its input values and local gradient functions.
+
+When `.backward()` is called, the library traverses the DAG in reverse topological order, evaluating the vector-Jacobian products:
+
+`v^T * J`
+
+where `v` is the incoming gradient from the next node, and `J` is the local Jacobian matrix. This system design avoids calculating full Jacobian matrices explicitly, saving substantial GPU memory and compute power.

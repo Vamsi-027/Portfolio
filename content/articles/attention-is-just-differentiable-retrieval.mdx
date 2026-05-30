@@ -1,0 +1,53 @@
+---
+title: "Attention Is Just Differentiable Retrieval"
+date: "2026-05-19"
+stage: "Stage 2"
+category: "attention"
+description: "Deconstructing self-attention as a soft database lookup. Query, Key, and Value matrices translate directly to standard database retrieval terms."
+tags: ["attention", "transformers", "matrix-multiplication", "retrieval"]
+resources: ["Attention Is All You Need Paper - https://arxiv.org/abs/1706.03762", "The Illustrated Transformer - https://jalammar.github.io/illustrated-transformer/"]
+---
+When I first read about the Transformer architecture, the Query, Key, and Value matrices felt like arbitrary naming choices. However, mapping these concepts to classical data storage systems shows that self-attention is simply a soft, differentiable database lookup.
+
+### The Classical Database Analog
+
+In a traditional key-value database, you query the database using a query `q`. The system compares `q` to a set of keys `k_i` using an exact match function (like hashing). When it finds the key `k_m` that matches `q`, it returns the associated value `v_m`:
+
+`Retrieval(q) = v_m  where k_m == q`
+
+In a database, this lookup is a hard, discrete operation. It is binary: a key either matches or it does not. Therefore, this operation is not differentiable. You cannot backpropagate gradients through a standard database lookup.
+
+### Soft, Differentiable Retrieval
+
+Self-attention relaxes this hard lookup into a soft, continuous lookup. Instead of selecting a single value, the attention mechanism calculates a similarity score between the query vector and all key vectors, normalizes these scores into a probability distribution, and returns a weighted sum of all value vectors.
+
+Let:
+- `Q` be the Query matrix representing the search queries.
+- `K` be the Key matrix representing the index keys.
+- `V` be the Value matrix representing the content values.
+
+The Scaled Dot-Product Attention is defined as:
+
+`Attention(Q, K, V) = Softmax( (Q * K^T) / sqrt(d_k) ) * V`
+
+Let's break down this formula into step-by-step operations:
+
+1. **Calculate Similarity (`Q * K^T`)**:
+   By taking the dot product of the query vectors in `Q` and the key vectors in `K`, we compute how aligned each query is with each key. If two vectors are highly aligned, their dot product is large.
+
+2. **Scaling (`/ sqrt(d_k)`)**:
+   As the vector dimension `d_k` grows, the dot products can grow large in magnitude, pushing the softmax function into regions with extremely small gradients. Dividing by the square root of `d_k` scales the values back, keeping the gradients healthy during training.
+
+3. **Probability Mapping (`Softmax(...)`)**:
+   The softmax function exponentiates the scaled dot products and divides by their sum. This turns the raw similarity scores into weights that sum to 1. This represents the probability distribution of where the model should "attend".
+
+4. **Weighted Value Retrieval (`* V`)**:
+   Multiplying by `V` scales each value vector by its attention weight. The resulting output vector is a weighted average of all values, containing information from the tokens that best match the query.
+
+### Systems Optimization: The Sequence Length Bottleneck
+
+While differentiable retrieval is incredibly powerful, it introduces a severe hardware constraint. Because every token's query must be compared against every token's key, the similarity matrix `Q * K^T` has a shape of `[Batch, Heads, SequenceLength, SequenceLength]`.
+
+This means memory usage and compute complexity scale quadratically `O(T^2)` with the sequence length. At a sequence length of 100,000 tokens, the attention matrix requires storing billions of floating-point numbers in GPU SRAM, causing Out-Of-Memory (OOM) errors. 
+
+Optimizing this bottleneck is one of the primary focuses of modern AI infrastructure engineering, using techniques like FlashAttention (re-computing softmax block-by-block in SRAM) to bypass materializing the full `T x T` matrix in GPU HBM.

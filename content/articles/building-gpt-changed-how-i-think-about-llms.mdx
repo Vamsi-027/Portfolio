@@ -1,0 +1,57 @@
+---
+title: "Building GPT Changed How I Think About LLMs"
+date: "2026-05-26"
+stage: "Stage 4"
+category: "gpt"
+description: "Why coding a decoder-only transformer from scratch in PyTorch exposes the core engineering truths hidden behind high-level APIs."
+tags: ["gpt", "transformers", "pytorch", "coding"]
+resources: ["Let's Build GPT from Scratch by Andrej Karpathy - https://youtu.be/zduSFxRajkE", "nanoGPT Repository - https://github.com/karpathy/nanoGPT"]
+---
+For a long time, working with large language models meant callings APIs. You write a prompt, hit an endpoint, and get back text. But calling `openai.ChatCompletion` hides the mechanical simplicity of autoregressive models. 
+
+Coding a character-level GPT from scratch in PyTorch using Andrej Karpathy's guide forced me to look at the raw computations. It changed how I think about LLMs.
+
+### The Autoregressive Loop
+
+At its core, a decoder-only transformer is a next-token predictor. It doesn't write sentences; it takes a sequence of token IDs, passes them through a stack of transformer blocks, and outputs a probability distribution over the entire vocabulary for the very next token.
+
+During generation, we perform a simple loop:
+
+1. Input: `[x_1, x_2, ..., x_t]`
+2. Predict probabilities for `x_(t+1)`.
+3. Sample from the distribution to get token `x_(t+1)`.
+4. Append `x_(t+1)` to the input.
+5. Repeat.
+
+This loop means generating a response of 500 tokens requires running the entire network 500 times. This is why LLM inference is slow and compute-heavy compared to typical web microservices.
+
+### The Code Reality of Causal Masking
+
+One of the most important concepts in decoder-only models is preventing the model from looking at future tokens during training. If the model can see token `t+1` while trying to predict token `t+1`, it will simply copy it, and training loss will collapse to zero without the model learning any representation.
+
+We prevent this using a lower-triangular causal mask matrix. In PyTorch, we implement this inside the attention block:
+
+```python
+# Create a lower-triangular mask of ones
+self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
+
+# Inside forward pass
+# weights shape: [B, T, T]
+wei = q @ k.transpose(-2, -1) * (1.0 / math.sqrt(k.size(-1)))
+wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
+wei = F.softmax(wei, dim=-1)
+```
+
+Setting the upper-triangular elements to negative infinity (`-inf`) means that when we evaluate the softmax function, the weights for future tokens become zero. The model is mathematically blocked from looking ahead.
+
+### Why Parameter Initialization Matters
+
+When I first ran my custom training loop, the loss did not decrease. I realized I had missed the parameter initialization step.
+
+Standard deep learning frameworks initialize weights using default normal distributions. For a transformer with deep residual connections (like 12 or 24 layers), this causes gradients to either explode or shrink to zero as they pass back through the layers.
+
+To stabilize training, we must scale the weights of the projection layers inside the residual blocks:
+
+`w_init = w_default / sqrt(2 * num_layers)`
+
+This simple scaling factor ensures that the variance of the activations remains constant throughout the network stack, allowing gradients to flow all the way to the embedding layer. Seeing a model fail to learn, adding three lines of scaling code, and watching the loss curve decrease taught me that LLM engineering is a battle against numerical instability.

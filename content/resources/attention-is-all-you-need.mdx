@@ -1,0 +1,11 @@
+---
+title: "Attention Is All You Need (Original Paper)"
+date: "2026-05-20"
+stage: "Stage 2"
+concepts: ["Scaled Dot-Product Attention", "Multi-Head Attention (MHA)", "Linear dimensional projects", "Sinusoidal Positional Encoding"]
+summary: "The seminal 2017 paper by Vaswani et al. replacing recurrence (RNNs/LSTMs) entirely with self-attention."
+insight: "By discarding sequence-step recurrence, MHA enables full parallelization during training, though at the cost of quadratic sequence memory scaling."
+relatedArticles: ["attention-is-just-differentiable-retrieval"]
+relatedNotes: ["attention/qkv", "attention/causal-masking", "attention/multi-head-attention"]
+---
+Reading the original paper forced me to look at the raw tensor dimension calculations. Forcing a model to be non-recurrent solves training time but introduces the context memory walls we struggle to optimize in production inference.

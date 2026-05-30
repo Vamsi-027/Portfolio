@@ -1,0 +1,64 @@
+---
+title: "From Next-Token Prediction to Agents: The Architectural Leap"
+date: "2026-05-28"
+stage: "Stage 4"
+category: "gpt"
+description: "How does a statistical next-token predictor become an autonomous agent? Analyzing the transition from autoregressive sampling to active execution loops."
+tags: ["agents", "llm-internals", "architectures", "systems"]
+resources: ["ReAct Paper: Reasoning and Acting in Language Models - https://arxiv.org/abs/2210.03629", "Model Context Protocol Introduction - https://modelcontextprotocol.io"]
+---
+A transformer model is fundamentally passive. It takes a context window of tokens, performs forward passes, and outputs a probability distribution to sample a single token. It does not think, it does not plan, and it cannot act on its own.
+
+How do we take this passive next-token predictor and turn it into an autonomous agent that can write code, run terminal commands, and navigate APIs?
+
+### The Agentic Loop: Wrapping the Model
+
+An AI agent is not a new model architecture. It is a systems-level wrapper around a base LLM. The agentic behavior is created by running the model inside an active execution loop.
+
+The simplest representation of this is the ReAct (Reasoning + Acting) loop:
+
+```
+[User Request] ➔ (Reasoning Step: Model outputs thought) ➔ (Action Step: Model outputs tool call) ➔ [Execution: System runs tool and returns result] ➔ (Observation: Result appended to prompt) ➔ Repeat
+```
+
+In this system, the model is prompted in a specific structure:
+- **Thought**: The model reasons about what it needs to do.
+- **Action**: The model decides to run a tool, formatting its output in a structured schema (like JSON).
+- **Observation**: The external environment executes the tool and appends the outcome to the conversation history.
+
+The loop repeats until the model decides it has completed the task and outputs a final answer.
+
+### Differentiable Action: Tool Calling
+
+For this loop to work, the model must output structured text that a parser can read reliably. This is called Tool Calling (or Function Calling).
+
+At a system level, tool calling works by:
+1. Providing the model with a list of available tools, including their names, descriptions, and expected parameters defined in JSON Schema.
+2. Training the model to recognize when a query requires a tool, and to output a specific XML or JSON block instead of regular conversational text.
+3. Pausing generation when the parser detects this block, executing the tool on the host machine, and inserting the results back into the conversation context as a new message.
+
+This means tool calling is a cooperation between the model's text generation and the system's execution environment.
+
+### The Standardized Interface: Model Context Protocol (MCP)
+
+As agentic workflows scale, connecting models to tools has become messy. Every developer writes custom API integrations, and every model provider has their own tool schema format.
+
+This is why the Model Context Protocol (MCP) is an exciting development. 
+
+MCP standardizes how applications expose data and tools to AI models. Instead of writing custom API adapters, developers build MCP Servers that expose:
+- **Resources**: Static data sources (like database schemas or file contents).
+- **Tools**: Dynamic execution functions (like running terminal commands or calling APIs).
+- **Prompts**: Pre-configured templates for common tasks.
+
+By defining a standard JSON-RPC protocol over stdio or Server-Sent Events (SSE), any agent client can connect to any MCP server and instantly discover and use its capabilities.
+
+### The Challenge of Context Engineering
+
+When we transition to agentic loops, the conversation history grows rapidly. Every tool execution adds hundreds of lines of structured logs and raw data back into the prompt.
+
+This creates the **Context Window bottleneck**. As the context grows:
+- The quadratic sequence cost of attention scales up latency.
+- The model's retrieval accuracy degrades (often called "Lost in the Middle").
+- API costs increase.
+
+To build production-grade agent infrastructure, we must implement active context engineering: pruning old logs, summarizing past steps, and using semantic retrieval (vector search) to keep the context window compact and clean.

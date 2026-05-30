@@ -1,0 +1,59 @@
+---
+title: "Reverse-Mode Auto-Diff (Backprop Graph Math)"
+date: "2026-05-16"
+category: "math"
+description: "Backpropagation derived as reverse-mode automatic differentiation over computational graphs."
+tags: ["math", "calculus", "backpropagation"]
+---
+Backpropagation is an implementation of reverse-mode automatic differentiation. Instead of deriving symbolic formulas, we evaluate derivatives numerically by traversing a computational graph in reverse order.
+
+### Computational Graph Example
+
+Consider the function:
+
+`f(x, w, b) = o(w * x + b)`
+
+We can break this down into elementary operations (nodes in a graph):
+
+1. `u = w * x`
+2. `v = u + b`
+3. `y = o(v)`
+
+```
+w ───┐
+     ├─► [u] ───► [+] ───► [o] ───► y
+x ───┘             ▲
+                   │
+b ─────────────────┘
+```
+
+### Forward Pass
+Compute values moving left-to-right through the nodes:
+- Input: `x = 2.0`, `w = 0.5`, `b = -1.0`
+- `u = 0.5 * 2.0 = 1.0`
+- `v = 1.0 + (-1.0) = 0.0`
+- `y = Sigmoid(0.0) = 0.5`
+
+### Backward Pass (Adjoint calculations)
+Let the final loss derivative with respect to output `y` be `dL/dy = 1.0`. We compute the adjoint values (local gradients) moving right-to-left:
+
+1. **At node `y = Sigmoid(v)`**:
+   - Local derivative: `dy/dv = y * (1 - y) = 0.5 * (1 - 0.5) = 0.25`
+   - Accumulate gradient: `dL/dv = dL/dy * dy/dv = 1.0 * 0.25 = 0.25`
+
+2. **At node `v = u + b`**:
+   - Local derivatives: `dv/du = 1`, `dv/db = 1`
+   - Accumulate:
+     - `dL/du = dL/dv * dv/du = 0.25 * 1 = 0.25`
+     - `dL/db = dL/dv * dv/db = 0.25 * 1 = 0.25`
+
+3. **At node `u = w * x`**:
+   - Local derivatives: `du/dw = x`, `du/dx = w`
+   - Accumulate:
+     - `dL/dw = dL/du * du/dw = 0.25 * 2.0 = 0.5`
+     - `dL/dx = dL/du * du/dx = 0.25 * 0.5 = 0.125`
+
+### Graph Rule
+If a node `z` branches to multiple paths (e.g. `z -> a` and `z -> b`), we sum the incoming gradients during the backward pass:
+
+`dL/dz = dL/da * da/dz + dL/db * db/dz`

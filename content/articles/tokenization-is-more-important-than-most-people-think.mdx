@@ -1,0 +1,65 @@
+---
+title: "Tokenization Is More Important Than Most People Think"
+date: "2026-05-24"
+stage: "Stage 3"
+category: "tokenization"
+description: "Why many common LLM bugs are actually tokenization errors. Deep-diving into BPE merge tables, spacing biases, and byte-level fallback strategies."
+tags: ["tokenization", "bpe", "minbpe", "llm-internals"]
+resources: ["minbpe Repository - https://github.com/karpathy/minbpe", "Byte Pair Encoding Paper - https://arxiv.org/abs/1508.07909"]
+---
+When discussing large language models, we spend most of our time on attention mechanisms, parameters counts, and reinforcement learning. But there is a silent component at the boundary of every LLM that determines how it sees the world: the tokenizer.
+
+Many bugs that developer attribute to reasoning limits are actually failures in tokenization.
+
+### The Problem: Models Can't See Text
+
+Neural networks work with floating-point tensors, not characters or strings. The tokenizer is the translator that turns a raw string into a sequence of token integers, which are then mapped to embedding vectors.
+
+The industry standard for tokenization is Byte-Pair Encoding (BPE). BPE starts at the byte level and iteratively merges the most frequent pairs of bytes in a training text corpus to construct a vocabulary of a target size (e.g., 32,000 or 100,000 tokens).
+
+### Tokenization Bugs in Action
+
+Because tokenization splits text based on statistical frequencies in the training data, it introduces weird biases:
+
+1. **The Spacing Bias**:
+   In many tokenizers, a word with a leading space is parsed as a single token, while the same word without a leading space is split into multiple tokens. For example, in GPT-4's tokenizer, `" token"` is token ID `389`, but `"token"` (without space) is token ID `11241`. This means the model sees these two words as completely unrelated integers, forcing the embedding layer to learn their semantic relationship from scratch.
+
+2. **The Spelling Limit**:
+   Why do LLMs struggle to count the number of 'r's in the word `"strawberry"`? It's not a logic failure. The tokenizer chunks `"strawberry"` into two tokens: `["straw", "berry"]`. The model never sees the individual letters `"s-t-r-a-w-b-e-r-r-y"`. It only sees the two token IDs, making letter-level counting a difficult retrieval task.
+
+3. **Non-English Penalty**:
+   Because BPE merges are calculated on English-dominated datasets, non-English languages require many more tokens to represent the same text. A single sentence in Japanese might require 3x the number of tokens as its English translation, effectively tripling the inference cost and dividing the context window by three for Japanese users.
+
+### The Code: How BPE Merges Work
+
+At a system level, training a tokenizer involves finding the most common adjacent pairs and replacing them with a new token ID. Here is a simplified mental model of the merge loop:
+
+```python
+def get_stats(ids):
+    # Count frequencies of adjacent pairs
+    counts = {}
+    for pair in zip(ids, ids[1:]):
+        counts[pair] = counts.get(pair, 0) + 1
+    return counts
+
+def merge(ids, pair, idx):
+    # Replace all occurrences of pair with idx
+    newids = []
+    i = 0
+    while i < len(ids):
+        if i < len(ids) - 1 and ids[i] == pair[0] and ids[i+1] == pair[1]:
+            newids.append(idx)
+            i += 2
+        else:
+            newids.append(ids[i])
+            i += 1
+    return newids
+```
+
+Studying this loop shows why token borders are fragile. If we merge the wrong pairs during vocabulary construction, we fragment words and hurt model performance.
+
+### Byte Fallbacks to Prevent Crashes
+
+Early tokenizers crashed when they encountered characters that were not in their training vocabulary (like new emojis). Modern tokenizers solve this using a UTF-8 byte fallback strategy.
+
+Instead of throwing an error or using an `[UNK]` (unknown) token, the tokenizer falls back to encoding the character as its raw UTF-8 bytes, and looks up the token IDs reserved for individual byte values `0` through `255`. This guarantees that any arbitrary string can be converted into tokens and back without loss of data.

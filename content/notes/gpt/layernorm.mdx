@@ -1,0 +1,45 @@
+---
+title: "LayerNorm Mechanics (Pre-LN vs Post-LN)"
+date: "2026-05-26"
+category: "gpt"
+description: "Formulas and differences between Pre-LN and Post-LN architectures in stabilizing transformer training."
+tags: ["gpt", "layernorm", "normalization"]
+---
+Layer Normalization (LayerNorm) is a critical stabilization operation in deep networks. It normalizes activations across the channel dimension for each individual training sample.
+
+### Mathematical Formulation
+
+Given input vector `x` of dimension `C`, LayerNorm performs:
+
+`y = (x - mean) / sqrt(var + epsilon) * gamma + beta`
+
+Where:
+- `mean` is the average value of elements in `x`.
+- `var` is the variance of elements in `x`.
+- `epsilon` is a small constant (e.g., `1e-5`) to avoid division by zero.
+- `gamma` (gain) and `beta` (bias) are learnable parameters initialized to 1 and 0 respectively.
+
+### Pre-LN vs Post-LN Architectures
+
+Where LayerNorm is placed inside the residual block determines the maximum trainable depth of the model.
+
+#### Post-LN (Original Transformer)
+LayerNorm is applied *after* the residual addition:
+
+`x_(l+1) = LayerNorm(x_l + Block(x_l))`
+
+- **Issue**: The expected magnitude of gradients increases with network depth, making training highly unstable. Post-LN requires a strict learning rate warmup schedule to prevent divergence.
+
+#### Pre-LN (Modern Standard)
+LayerNorm is applied *before* the block computation:
+
+`x_(l+1) = x_l + Block(LayerNorm(x_l))`
+
+- **Benefit**: The identity pathway through the residual connection is unimpeded. Gradients can flow directly from the final loss back to the embedding layers without scaling bottlenecks. This enables stable training without complex warmup strategies.
+
+### RMSNorm (The Optimization)
+Modern models (like LLaMA) replace LayerNorm with Root Mean Square Normalization (RMSNorm) to save compute overhead. RMSNorm assumes the mean is 0 and only normalizes by the root mean square:
+
+`y = x / RMS(x) * gamma`
+
+Where `RMS(x) = sqrt(1/C * sum(x_i^2) + epsilon)`. This removes the mean calculation step, saving roughly 7% to 10% of attention block compute time.

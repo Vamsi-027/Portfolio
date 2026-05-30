@@ -1,0 +1,11 @@
+---
+title: "Andrej Karpathy – Let's Build GPT from Scratch"
+date: "2026-05-25"
+stage: "Stage 4"
+concepts: ["Decoder block configuration", "Causal masking matrix", "LayerNorm (Pre-LN)", "Weight initializations", "Regularization (Dropout, Weight Decay)"]
+summary: "A practical, line-by-line coding implementation of a character-level decoder-only transformer in PyTorch."
+insight: "Correct parameter weight initializations and Pre-LN routing are critical for training stability. Without them, gradients collapse silently."
+relatedArticles: ["building-gpt-changed-how-i-think-about-llms"]
+relatedNotes: ["gpt/decoder-only-transformers", "gpt/layernorm"]
+---
+Coding along with Karpathy bridged the gap between equations and floating-point computations. Correcting loss calculation details showed me how model errors remain hidden from standard compiler checks.

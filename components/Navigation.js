@@ -17,10 +17,11 @@ const Navigation = () => {
   }, [])
 
   const navLinks = [
-    { name: 'Philosophy', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Expertise', href: '#expertise' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Philosophy', href: '/#about' },
+    { name: 'Experience', href: '/#experience' },
+    { name: 'Expertise', href: '/#expertise' },
+    { name: 'Projects', href: '/#projects' },
+    { name: 'Learning Journey', href: '/learning' },
   ]
 
   const socialLinks = [

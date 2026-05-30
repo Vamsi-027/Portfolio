@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://vamsicheruku.dev</loc><lastmod>2025-09-08T19:54:28.805Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles</loc><lastmod>2026-05-30T17:11:42.630Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/resources</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/ai-learning-journey</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/attention/causal-masking</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/attention/multi-head-attention</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/attention/qkv</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/gpt/decoder-only-transformers</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/gpt/layernorm</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/math/backpropagation</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/math/gradients</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/tokenization/bpe</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/notes/tokenization/utf8-byte-fallback</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles/attention-is-just-differentiable-retrieval</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles/building-gpt-changed-how-i-think-about-llms</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles/from-next-token-prediction-to-agents</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles/how-backpropagation-actually-works</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://vamsicheruku.dev/learning/articles/tokenization-is-more-important-than-most-people-think</loc><lastmod>2026-05-30T17:11:42.631Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

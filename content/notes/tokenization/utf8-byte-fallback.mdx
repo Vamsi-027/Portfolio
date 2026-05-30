@@ -1,0 +1,44 @@
+---
+title: "UTF-8 Byte Fallback Strategy"
+date: "2026-05-23"
+category: "tokenization"
+description: "How modern tokenizers handle out-of-vocabulary characters using raw byte encoding."
+tags: ["tokenization", "utf8", "encoding"]
+---
+Early LLM tokenizers used an `[UNK]` (unknown) token to represent characters that were not in their training vocabulary. This caused data loss and crashes when processing emojis, foreign alphabets, or special symbols.
+
+Modern tokenizers (like Llama's or Tiktoken's) solve this using a **UTF-8 Byte Fallback** strategy.
+
+### The Mechanism
+
+UTF-8 encodes characters as sequence of 1 to 4 bytes:
+
+- ASCII characters (like 'A'): 1 byte (e.g. `0x41`)
+- Emojis (like 🚀): 4 bytes (e.g. `0xF0 0x9F 0x9A 0x80`)
+
+Instead of throwing an error or replacing out-of-vocabulary characters with `[UNK]`, the tokenizer falls back to encoding the characters as raw UTF-8 bytes.
+
+The tokenizer vocabulary always reserves the first 256 token IDs (0 to 255) for the raw byte values `0x00` through `0xFF`. When a character cannot be mapped to any merged subword token, it is split into its raw byte values, and those byte tokens are outputted instead.
+
+### Benefits
+
+1. **Zero Out-of-Vocabulary Errors**: Any string can be converted into tokens.
+2. **Reversibility**: The decoding step can convert the raw bytes back into the original UTF-8 string without data loss.
+3. **No Unknown Tokens**: Avoids generating ugly `[UNK]` blocks in output text.
+
+### Example in Python
+
+```python
+# Encodes an out-of-vocab emoji as raw UTF-8 byte tokens
+text = "🚀"
+raw_bytes = text.encode("utf-8") # b'\xf0\x9f\x9a\x80'
+
+# Tokenizer falls back to individual byte values:
+tokens = [int(b) for b in raw_bytes]
+print(tokens) # [240, 159, 154, 128]
+
+# Decoding reconstructs the emoji:
+decoded_bytes = bytes(tokens)
+decoded_text = decoded_bytes.decode("utf-8")
+print(decoded_text) # 🚀
+```

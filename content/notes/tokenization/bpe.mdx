@@ -1,0 +1,70 @@
+---
+title: "Byte-Pair Encoding Merge Tables"
+date: "2026-05-22"
+category: "tokenization"
+description: "How Byte-Pair Encoding (BPE) algorithms construct vocabularies and manage token merge tables."
+tags: ["tokenization", "bpe", "algorithms"]
+---
+Byte-Pair Encoding (BPE) is the core algorithm used to train LLM tokenizers (like Tiktoken or SentencePiece). It builds a vocabulary by iteratively merging the most frequent pairs of characters or bytes.
+
+### The Algorithm Steps
+
+1. **Initialize Vocabulary**:
+   Start with all individual bytes (values 0-255) as base tokens. The vocabulary size is initially 256.
+
+2. **Tokenize Corpus**:
+   Convert the training text corpus into a list of byte integers.
+
+3. **Count Adjacent Pairs**:
+   Find all adjacent pairs of token IDs and count their frequencies in the corpus.
+
+4. **Merge Most Frequent Pair**:
+   Identify the most frequent pair `(t_i, t_j)`. Create a new token ID `t_new` and add it to the vocabulary. Replace all occurrences of `(t_i, t_j)` in the tokenized corpus with `t_new`.
+
+5. **Record Merge**:
+   Add the merge operation `(t_i, t_j) -> t_new` to the BPE merge table.
+
+6. **Repeat**:
+   Go back to step 3 and repeat until the vocabulary reaches the target size (e.g. 50,000 or 100,000).
+
+### Python Training Reference
+
+Here is the core logic for training a BPE tokenizer:
+
+```python
+def get_stats(ids):
+    counts = {}
+    for pair in zip(ids, ids[1:]):
+        counts[pair] = counts.get(pair, 0) + 1
+    return counts
+
+def merge(ids, pair, idx):
+    newids = []
+    i = 0
+    while i < len(ids):
+        if i < len(ids) - 1 and ids[i] == pair[0] and ids[i+1] == pair[1]:
+            newids.append(idx)
+            i += 2
+        else:
+            newids.append(ids[i])
+            i += 1
+    return newids
+
+# Example training loop
+def train_bpe(raw_bytes, vocab_size):
+    num_merges = vocab_size - 256
+    ids = list(raw_bytes)
+    merges = {} # (int, int) -> int
+    
+    for i in range(num_merges):
+        stats = get_stats(ids)
+        if not stats:
+            break
+        # Find the pair with highest count
+        best_pair = max(stats, key=stats.get)
+        new_id = 256 + i
+        ids = merge(ids, best_pair, new_id)
+        merges[best_pair] = new_id
+        
+    return merges
+```
