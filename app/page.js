@@ -5,13 +5,16 @@ import Expertise from '../components/Expertise'
 import About from '../components/About'
 import Contact from '../components/Contact'
 
-export default function Home() {
+export default async function Home({ searchParams }) {
+  // the manual-style figures by default; ?art=iso shows the isometric line drawings
+  const params = await searchParams
+  const art = params?.art === 'iso' ? 'iso' : 'manual'
   return (
     <>
       <Hero />
-      <Impact />
+      <Impact art={art} />
       <Experience />
-      <Expertise />
+      <Expertise art={art} />
       <About />
       <Contact />
     </>

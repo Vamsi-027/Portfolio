@@ -1,18 +1,26 @@
-import { Host_Grotesk } from 'next/font/google'
+import { Rethink_Sans, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Navigation from '../components/Navigation'
 
-const hostGrotesk = Host_Grotesk({
+const rethink = Rethink_Sans({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '600', '700'],
   display: 'swap',
-  variable: '--font-host',
+  variable: '--font-rethink',
+  adjustFontFallback: false,
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+  variable: '--font-geist-mono',
   adjustFontFallback: false,
 })
 
 export const metadata = {
-  title: 'Vamsi Cheruku | Systems Architect & Performance Engineer',
-  description: 'I don\'t just build systems—I engineer competitive advantages. Backend engineer specializing in high-performance, scalable distributed systems with proven business impact.',
+  title: 'Vamsi Cheruku | Backend engineer',
+  description: 'Backend engineer. Cut Kural\'s feed load at Zoho from 900 ms to 80 ms with Kafka and Redis; now building LLM agent pipelines.',
   keywords: 'systems architect, backend engineer, performance optimization, distributed systems, scalable architecture, Java, Spring Boot, microservices, AWS, Vamsi Cheruku',
   authors: [{ name: 'Vamsi Cheruku' }],
   creator: 'Vamsi Cheruku',
@@ -22,21 +30,21 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://vamsicheruku.dev'),
+  metadataBase: new URL('https://vamsicheruku.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Vamsi Cheruku | Systems Architect & Performance Engineer',
-    description: 'I don\'t just build systems—I engineer competitive advantages. Proven track record of building scalable systems that drive measurable business impact.',
-    url: 'https://vamsicheruku.dev',
+    title: 'Vamsi Cheruku | Backend engineer',
+    description: 'Backend engineer. Cut Kural\'s feed load at Zoho from 900 ms to 80 ms with Kafka and Redis; now building LLM agent pipelines.',
+    url: 'https://vamsicheruku.com',
     siteName: 'Vamsi Cheruku Portfolio',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Vamsi Cheruku - Systems Architect & Performance Engineer',
+        alt: 'Vamsi Cheruku, backend engineer',
       },
     ],
     locale: 'en_US',
@@ -44,10 +52,10 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vamsi Cheruku | Systems Architect & Performance Engineer',
-    description: 'I don\'t just build systems—I engineer competitive advantages.',
+    title: 'Vamsi Cheruku | Backend engineer',
+    description: 'Backend engineer who cut Zoho\'s feed load from 900 ms to 80 ms, now building LLM agent pipelines.',
     images: ['/images/og-image.jpg'],
-    creator: '@vamsicheruku',
+    creator: '@cheruku_vamsi',
   },
   robots: {
     index: true,
@@ -69,18 +77,15 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#1c1f23' },
-    { media: '(prefers-color-scheme: dark)', color: '#1c1f23' },
+    { media: '(prefers-color-scheme: light)', color: '#eeeeed' },
+    { media: '(prefers-color-scheme: dark)', color: '#eeeeed' },
   ],
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={hostGrotesk.variable}>
+    <html lang="en" className={`${rethink.variable} ${geistMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;500&display=swap" rel="stylesheet" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
       </head>
@@ -108,12 +113,13 @@ export default function RootLayout({ children }) {
               '@context': 'https://schema.org',
               '@type': 'Person',
               name: 'Vamsi Cheruku',
-              jobTitle: 'Systems Architect & Performance Engineer',
-              description: 'Backend engineer specializing in high-performance, scalable distributed systems',
-              url: 'https://vamsicheruku.dev',
+              jobTitle: 'Backend engineer',
+              description: 'Backend engineer: Kafka, Redis and Java at Zoho, now LLM agent pipelines',
+              url: 'https://vamsicheruku.com',
               sameAs: [
                 'https://linkedin.com/in/vamsi-cheruku-05a19a1b4',
-                'https://github.com/Vamsi-027'
+                'https://github.com/Vamsi-027',
+                'https://x.com/cheruku_vamsi'
               ],
               worksFor: {
                 '@type': 'Organization',
@@ -121,7 +127,7 @@ export default function RootLayout({ children }) {
               },
               alumniOf: {
                 '@type': 'EducationalOrganization',
-                name: 'Your University Name'
+                name: 'Saint Louis University'
               },
               knowsAbout: [
                 'Backend Development',

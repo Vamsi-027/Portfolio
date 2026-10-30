@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { FiSearch, FiGithub, FiLinkedin } from 'react-icons/fi'
+import { FaXTwitter } from 'react-icons/fa6'
 
 const destinations = [
   { name: 'Projects', hint: 'Agent Motif, Back2Cards, Agent Echo, SaamCars', href: '/#projects' },
@@ -12,6 +13,7 @@ const destinations = [
   { name: 'Resume', hint: 'Google Drive', href: 'https://drive.google.com/file/d/173yYb__jgmFVVInXkr7kYiJFjJcJfZY9/view?usp=sharing', external: true },
   { name: 'GitHub', hint: 'Vamsi-027', href: 'https://github.com/Vamsi-027', external: true },
   { name: 'LinkedIn', hint: 'vamsi-cheruku-05a19a1b4', href: 'https://linkedin.com/in/vamsi-cheruku-05a19a1b4', external: true },
+  { name: 'X', hint: '@cheruku_vamsi', href: 'https://x.com/cheruku_vamsi', external: true },
   { name: 'Email', hint: 'vamsicheruku18@gmail.com', href: 'mailto:vamsicheruku18@gmail.com' },
 ]
 
@@ -71,29 +73,35 @@ const Navigation = () => {
   return (
     <header className="nav">
       <div className="container nav__bar">
-        <a href="/" className="nav__mark" aria-label="Vamsi Cheruku, home">
-          Vamsi Cheruku
-        </a>
-
-        <button type="button" className="jump" onClick={open} aria-haspopup="dialog" aria-label="Jump to a section">
-          <FiSearch aria-hidden="true" />
-          <span className="jump__label">Jump to a section</span>
-          <span className="keys" aria-hidden="true">
-            <kbd className="key">{isMac ? '⌘' : 'Ctrl'}</kbd>
-            <kbd className="key">K</kbd>
-          </span>
-        </button>
-
-        <div className="nav__end">
+        <div className="nav__start">
+          <a href="/" className="wordmark" aria-label="Vamsi Cheruku, home">Vamsi Cheruku</a>
           <ul className="nav__links">
             <li><a href="/#projects">Projects</a></li>
             <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#about">About</a></li>
           </ul>
+        </div>
+
+        <div className="nav__end">
+          <button type="button" className="jump" onClick={open} aria-haspopup="dialog" aria-label="Jump to a section">
+            <FiSearch aria-hidden="true" />
+            <span className="jump__label">Jump to</span>
+            <kbd className="key" aria-hidden="true">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+          </button>
+          <a
+            className="nav__text"
+            href="https://drive.google.com/file/d/173yYb__jgmFVVInXkr7kYiJFjJcJfZY9/view?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Resume
+          </a>
           <ul className="nav__social">
             <li><a href="https://github.com/Vamsi-027" target="_blank" rel="noreferrer" aria-label="GitHub"><FiGithub aria-hidden="true" /></a></li>
             <li><a href="https://linkedin.com/in/vamsi-cheruku-05a19a1b4" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FiLinkedin aria-hidden="true" /></a></li>
+            <li><a href="https://x.com/cheruku_vamsi" target="_blank" rel="noreferrer" aria-label="X"><FaXTwitter aria-hidden="true" /></a></li>
           </ul>
-          <a href="/#contact" className="btn btn--small">Contact</a>
+          <a href="/#contact" className="pill pill--small">Get in touch</a>
         </div>
       </div>
 

@@ -3,6 +3,38 @@
   "mode": "redesign",
   "depth": "full",
   "scope": "page",
+  "shape": "Spotlight reel (custom)",
+  "theme": "custom",
+  "axes": "light/grotesk-sans/neutral",
+  "hero": "centred statement",
+  "nav": "wordmark and links left, jump key, resume, icons and one light pill right",
+  "footer": "white closing panel, then one line of links",
+  "imagery": "screenshots 2 (capture.mjs), user portrait, two system diagrams",
+  "photos": [],
+  "entry": "none",
+  "fingerprint": "custom-spotlight-centred-bands-closepanel",
+  "sections": [
+   "Hero (centred statement)",
+   "Band of four spotlights",
+   "Figures + Rows (experience, deep dive)",
+   "Table (toolkit)",
+   "Split + Rows (philosophy, portrait)",
+   "Close panel",
+   "Footer line"
+  ],
+  "signature": "the charcoal band of four spotlights, Agent Motif job first",
+  "waived": [
+   "6b",
+   "44c",
+   "72"
+  ],
+  "prompt": "redesign the portfolio using kargul.studio as reference",
+  "date": "2026-10-30"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
   "shape": "Workbench",
   "theme": "console",
   "axes": "dark/grotesk-sans/chromatic-amber",

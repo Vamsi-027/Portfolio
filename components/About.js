@@ -17,7 +17,7 @@ const rules = [
   {
     title: 'Current Explorations',
     body: [
-      'Outside of my core Java/Kafka stack, my MS in Artificial Intelligence has pushed me toward the intersection of distributed systems and ML. I am currently exploring Kubernetes internals, Redis caching strategies at scale, and the backend infrastructure required for MLOps: specifically data pipelines, vector databases, and scalable inference APIs. Long-term, I want to build the platforms that allow ML models to run reliably for millions of users.',
+      'My M.S. in AI pulled me to where distributed systems meet ML: agent pipelines, evals, and the queues and caches that stop a paid model call from running twice. I build them daily with Claude Code and Codex, and I judge them the way I judged Kural: speed, failure rate, cost.',
     ],
   },
 ]
@@ -25,16 +25,16 @@ const rules = [
 const About = () => {
   return (
     <section id="about" className="section section--l" aria-labelledby="about-title">
-      <div className="container creed">
-        <figure className="creed__portrait">
-          <div className="portrait" data-slot="portrait" data-alt="Vamsi Cheruku, portrait">
-            <Image src="/profile.jpg" alt="Vamsi Cheruku" fill sizes="(min-width: 60rem) 30vw, 22rem" />
+      <div className="container about">
+        <figure className="about__portrait">
+          <div className="portrait" data-slot="portrait" data-alt="Vamsi Cheruku, illustrated portrait">
+            <Image src="/images/profile-tile.png" alt="Illustrated portrait of Vamsi Cheruku in black ink, in a dark shirt" fill sizes="(min-width: 60rem) 30vw, 22rem" />
           </div>
           <figcaption className="caption">Vamsi Cheruku, Saint Louis, MO</figcaption>
         </figure>
 
-        <div className="creed__body">
-          <div className="head head--stack head--flush">
+        <div className="about__body">
+          <div className="about__head">
             <h2 id="about-title">Failures are guaranteed</h2>
             <p className="lead">
               I build systems that solve problems at the infrastructure level, where design decisions directly dictate reliability, scalability, and performance.
