@@ -1,133 +1,147 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { FiSearch, FiGithub, FiLinkedin } from 'react-icons/fi'
+
+const destinations = [
+  { name: 'Projects', hint: 'Agent Motif, Back2Cards, Agent Echo, SaamCars', href: '/#projects' },
+  { name: 'Experience', hint: 'Zoho, Saint Louis University', href: '/#experience' },
+  { name: 'Expertise', hint: 'Languages, frameworks, data, cloud', href: '/#expertise' },
+  { name: 'Philosophy', hint: 'How I build', href: '/#about' },
+  { name: 'Contact', hint: 'Email and links', href: '/#contact' },
+  { name: 'Resume', hint: 'Google Drive', href: 'https://drive.google.com/file/d/173yYb__jgmFVVInXkr7kYiJFjJcJfZY9/view?usp=sharing', external: true },
+  { name: 'GitHub', hint: 'Vamsi-027', href: 'https://github.com/Vamsi-027', external: true },
+  { name: 'LinkedIn', hint: 'vamsi-cheruku-05a19a1b4', href: 'https://linkedin.com/in/vamsi-cheruku-05a19a1b4', external: true },
+  { name: 'Email', hint: 'vamsicheruku18@gmail.com', href: 'mailto:vamsicheruku18@gmail.com' },
+]
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const dialogRef = useRef(null)
+  const inputRef = useRef(null)
+  const [query, setQuery] = useState('')
+  const [active, setActive] = useState(0)
+  const [isMac, setIsMac] = useState(true)
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return destinations
+    return destinations.filter((d) => `${d.name} ${d.hint}`.toLowerCase().includes(q))
+  }, [query])
+
+  const open = () => {
+    const dialog = dialogRef.current
+    if (!dialog || dialog.open) return
+    setQuery('')
+    setActive(0)
+    dialog.showModal()
+    inputRef.current?.focus()
+  }
+
+  const close = () => dialogRef.current?.close()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+    setIsMac(/Mac|iPhone|iPad/.test(navigator.platform))
+    const onKey = (e) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable
+      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
+        e.preventDefault()
+        open()
+      }
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  const navLinks = [
-    { name: 'Philosophy', href: '/#about' },
-    { name: 'Experience', href: '/#experience' },
-    { name: 'Expertise', href: '/#expertise' },
-    { name: 'Projects', href: '/#projects' },
-    { name: 'Learning Journey', href: '/learning' },
-  ]
-
-  const socialLinks = [
-    { icon: FiGithub, href: 'https://github.com/Vamsi-027' },
-    { icon: FiLinkedin, href: 'https://linkedin.com/in/vamsi-cheruku-05a19a1b4' },
-    { icon: FiMail, href: 'mailto:vamsicheruku18@gmail.com' },
-  ]
+  const onListKey = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive((i) => Math.min(i + 1, results.length - 1))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive((i) => Math.max(i - 1, 0))
+    } else if (e.key === 'Enter' && results[active]) {
+      e.preventDefault()
+      const d = results[active]
+      close()
+      if (d.external) window.open(d.href, '_blank', 'noreferrer')
+      else window.location.href = d.href
+    }
+  }
 
   return (
-    <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-200 ${
-        isScrolled ? 'bg-black border-b border-border py-4' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <motion.a 
-          href="#"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-lg font-bold tracking-tight hover:opacity-70 transition-opacity"
-        >
-          Vamsi Cheruku.
-        </motion.a>
+    <header className="nav">
+      <div className="container nav__bar">
+        <a href="/" className="nav__mark" aria-label="Vamsi Cheruku, home">
+          Vamsi Cheruku
+        </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <ul className="flex space-x-6 text-sm font-medium text-muted-foreground">
-            {navLinks.map((link, i) => (
-              <motion.li 
-                key={link.name}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <a href={link.href} className="hover:text-foreground transition-colors">
-                  {link.name}
-                </a>
-              </motion.li>
-            ))}
-          </ul>
-
-          <div className="flex items-center space-x-5 border-l border-border pl-6">
-            {socialLinks.map((social, i) => (
-              <motion.a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 + i * 0.1 }}
-              >
-                <social.icon size={16} />
-              </motion.a>
-            ))}
-          </div>
-        </nav>
-
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-foreground p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+        <button type="button" className="jump" onClick={open} aria-haspopup="dialog" aria-label="Jump to a section">
+          <FiSearch aria-hidden="true" />
+          <span className="jump__label">Jump to a section</span>
+          <span className="keys" aria-hidden="true">
+            <kbd className="key">{isMac ? '⌘' : 'Ctrl'}</kbd>
+            <kbd className="key">K</kbd>
+          </span>
         </button>
+
+        <div className="nav__end">
+          <ul className="nav__links">
+            <li><a href="/#projects">Projects</a></li>
+            <li><a href="/#experience">Experience</a></li>
+          </ul>
+          <ul className="nav__social">
+            <li><a href="https://github.com/Vamsi-027" target="_blank" rel="noreferrer" aria-label="GitHub"><FiGithub aria-hidden="true" /></a></li>
+            <li><a href="https://linkedin.com/in/vamsi-cheruku-05a19a1b4" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FiLinkedin aria-hidden="true" /></a></li>
+          </ul>
+          <a href="/#contact" className="btn btn--small">Contact</a>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black border-b border-border overflow-hidden"
-          >
-            <div className="px-6 py-6 flex flex-col space-y-4">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <div className="flex space-x-6 pt-4 mt-2 border-t border-border">
-                {socialLinks.map((social, i) => (
-                  <a
-                    key={i}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <social.icon size={18} />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <dialog
+        ref={dialogRef}
+        className="palette"
+        aria-label="Jump to a section"
+        onClick={(e) => { if (e.target === dialogRef.current) close() }}
+      >
+        <div className="palette__field">
+          <FiSearch aria-hidden="true" />
+          <input
+            ref={inputRef}
+            className="palette__input"
+            type="text"
+            name="jump"
+            autoComplete="off"
+            placeholder="Projects, experience, resume…"
+            aria-label="Filter destinations"
+            aria-controls="palette-list"
+            aria-activedescendant={results[active] ? `jump-${active}` : undefined}
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setActive(0) }}
+            onKeyDown={onListKey}
+          />
+        </div>
+        <ul id="palette-list" className="palette__list" role="listbox" aria-label="Destinations">
+          {results.map((d, i) => (
+            <li key={d.name} role="presentation">
+              <a
+                id={`jump-${i}`}
+                role="option"
+                aria-selected={i === active}
+                className="palette__item"
+                href={d.href}
+                target={d.external ? '_blank' : undefined}
+                rel={d.external ? 'noreferrer' : undefined}
+                onMouseEnter={() => setActive(i)}
+                onClick={close}
+              >
+                <span>{d.name}</span>
+                <small>{d.hint}</small>
+              </a>
+            </li>
+          ))}
+          {results.length === 0 && <li className="palette__empty">Nothing matches “{query}”.</li>}
+        </ul>
+      </dialog>
     </header>
   )
 }

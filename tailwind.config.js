@@ -31,8 +31,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+        sans: ['var(--font-body)'],
+        mono: ['var(--font-outlier)'],
       },
       animation: {
         "fade-in": "fadeIn 0.3s ease-out forwards",
@@ -49,6 +49,9 @@ module.exports = {
         },
       },
     },
+  },
+  corePlugins: {
+    container: false,
   },
   plugins: [],
 }

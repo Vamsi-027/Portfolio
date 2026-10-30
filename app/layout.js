@@ -1,17 +1,13 @@
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Host_Grotesk } from 'next/font/google'
 import './globals.css'
 import Navigation from '../components/Navigation'
 
-const inter = Inter({ 
+const hostGrotesk = Host_Grotesk({
   subsets: ['latin'],
+  weight: ['400', '500'],
   display: 'swap',
-  variable: '--font-inter',
-})
-
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
+  variable: '--font-host',
+  adjustFontFallback: false,
 })
 
 export const metadata = {
@@ -72,32 +68,27 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#171717' },
+    { media: '(prefers-color-scheme: light)', color: '#1c1f23' },
+    { media: '(prefers-color-scheme: dark)', color: '#1c1f23' },
   ],
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+    <html lang="en" className={hostGrotesk.variable}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;500&display=swap" rel="stylesheet" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body 
-        className={`${inter.className} antialiased bg-background text-foreground overflow-x-hidden`}
+      <body
         suppressHydrationWarning={true}
       >
         {/* Skip to main content for accessibility */}
-        <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded-md z-50 transition-all"
-        >
+        <a href="#main-content" className="skip">
           Skip to main content
         </a>
         
@@ -105,7 +96,7 @@ export default function RootLayout({ children }) {
         <Navigation />
         
         {/* Main Content */}
-        <main id="main-content" className="relative">
+        <main id="main-content">
           {children}
         </main>
         

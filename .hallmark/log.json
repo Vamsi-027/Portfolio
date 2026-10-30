@@ -1,0 +1,33 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
+  "shape": "Workbench",
+  "theme": "console",
+  "axes": "dark/grotesk-sans/chromatic-amber",
+  "hero": "Corridor",
+  "nav": "search-led bar",
+  "footer": "statement",
+  "imagery": "screenshots 2 (capture.mjs), user portrait, two system diagrams",
+  "photos": [],
+  "entry": "none",
+  "fingerprint": "workbench-console-corridor-searchbar-statement",
+  "sections": [
+   "Hero (Corridor + readout)",
+   "Showcase (Agent Motif pipeline)",
+   "Split (Back2Cards capture)",
+   "Panels (Agent Echo trail, SaamCars capture)",
+   "Trail + Diff (Experience)",
+   "Table (toolkit)",
+   "Split + Rows (philosophy, portrait)",
+   "Footer statement"
+  ],
+  "signature": "the Agent Motif job, five agents on one Redis queue",
+  "waived": [
+   "59"
+  ],
+  "prompt": "portfolio of a backend and AI systems engineer seeking a role",
+  "date": "2026-10-30"
+ }
+]
