@@ -210,6 +210,28 @@ const flows = {
       { x: 245, y: 30, w: 48, h: 44, at: [0.90, 0.98], soft: true },
     ],
   },
+  cards: {
+    T: 7.2,
+    assembly: 2.0,
+    tokens: [
+      // 1. Client card move into WebSocket Gateway and Room Arbiter
+      [[-226, -25, 0, 0.04], [-140, -5, 0, 0.16], [-55, -50, 0, 0.28], [-15, -50, 0, 0.35]],
+      // 2. Peer-to-peer WebRTC voice ping between iOS and Android
+      [[-226, -70, 0, 0.12], [-226, -5, 0, 0.24], [-226, -5, 0, 0.28], [-226, -70, 0, 0.40]],
+      // 3. AI Opponent evaluates and submits counter-card
+      [[135, 0, 0, 0.30], [80, 0, 0, 0.42], [25, 0, 0, 0.48]],
+      // 4. Battle Resolver decides winner, updates Trump Deck, broadcasts to clients
+      [[25, 0, 0, 0.54], [-30, 42, 0, 0.62], [-140, -5, 0, 0.74], [-226, 60, 0, 0.88]],
+      [[-140, -5, 0, 0.74], [-226, -70, 0, 0.88]],
+    ],
+    flashes: [
+      { x: -165, y: -70, w: 56, h: 130, at: [0.16, 0.26], soft: true },
+      { x: -55, y: -75, w: 48, h: 44, at: [0.28, 0.38] },
+      { x: 105, y: -45, w: 62, h: 90, at: [0.32, 0.44], soft: true },
+      { x: 5, y: -35, w: 40, h: 70, at: [0.48, 0.60] },
+      { x: -55, y: 15, w: 48, h: 55, at: [0.62, 0.72], soft: true },
+    ],
+  },
 }
 
 const RUNS = 2
@@ -687,19 +709,156 @@ const drawings = {
   ),
   cards: (
     <>
-      <Plate x={-235} y={-100} w={50} h={42} t={6} />
-      <Plate x={-235} y={-22} w={50} h={42} t={6} />
-      <Plate x={-235} y={56} w={50} h={42} t={6} />
-      <Dash from={[-210, -58]} to={[-210, -22]} />
-      <Dash from={[-210, 20]} to={[-210, 56]} />
-      {[-79, -1, 77].map((y) => <Dash key={y} from={[-185, y]} to={[-100, 0]} />)}
-      <Plate x={-100} y={-80} w={140} h={160} t={10} />
-      <Plate x={-80} y={-55} w={100} h={110} z={62} t={6} strong />
-      {[[-80, -55], [20, -55], [20, 55], [-80, 55]].map(([x, y]) => <Dash key={`${x}${y}`} from={[x, y, 0]} to={[x, y, 56]} />)}
-      <Packet at={[-180, -80, 0]} d={90} i={0} size={8} />
-      <Packet at={[-180, 72, 0]} d={90} i={1} size={8} />
-      <Dash from={[40, 0]} to={[110, 0]} />
-      <Plate x={110} y={-22} w={44} h={44} t={32} />
+      {/* 1. iOS Mobile Client */}
+      <Part d={0}>
+        <Plate x={-250} y={-95} w={48} h={42} t={6} />
+        {/* Dynamic Island pill & speaker */}
+        <polygon points={pts([iso(-244, -91), iso(-236, -91), iso(-236, -88), iso(-244, -88)])} className="iso-face--strong" />
+        {/* Mobile screen card display outline */}
+        <polygon points={pts([iso(-242, -84), iso(-222, -84), iso(-222, -62), iso(-242, -62)])} className="iso-face iso-subtle" />
+        <line x1={iso(-238, -78)[0]} y1={iso(-238, -78)[1]} x2={iso(-226, -78)[0]} y2={iso(-226, -78)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(-238, -72)[0]} y1={iso(-238, -72)[1]} x2={iso(-228, -72)[0]} y2={iso(-228, -72)[1]} className="iso-line" />
+        <circle cx={iso(-226, -74)[0]} cy={iso(-226, -74)[1]} r="1.5" className="iso-node" />
+      </Part>
+
+      {/* 2. Android Mobile Client */}
+      <Part d={0.12}>
+        <Plate x={-250} y={-25} w={48} h={42} t={6} />
+        {/* Punch-hole camera */}
+        <circle cx={iso(-243, -20)[0]} cy={iso(-243, -20)[1]} r="1.3" className="iso-node" />
+        {/* Card stat selection pill */}
+        <polygon points={pts([iso(-242, -14), iso(-222, -14), iso(-222, 8), iso(-242, 8)])} className="iso-face iso-subtle" />
+        <line x1={iso(-238, -7)[0]} y1={iso(-238, -7)[1]} x2={iso(-226, -7)[0]} y2={iso(-226, -7)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(-238, -1)[0]} y1={iso(-238, -1)[1]} x2={iso(-230, -1)[0]} y2={iso(-230, -1)[1]} className="iso-line" />
+      </Part>
+
+      {/* 3. Desktop Web Client */}
+      <Part d={0.24}>
+        <Plate x={-250} y={45} w={48} h={42} t={6} />
+        {/* Browser window chrome dots & address bar */}
+        <line x1={iso(-248, 52)[0]} y1={iso(-248, 52)[1]} x2={iso(-204, 52)[0]} y2={iso(-204, 52)[1]} className="iso-line" strokeWidth="1.1" />
+        <circle cx={iso(-245, 48)[0]} cy={iso(-245, 48)[1]} r="1.2" className="iso-node" />
+        <circle cx={iso(-240, 48)[0]} cy={iso(-240, 48)[1]} r="1.2" className="iso-node" />
+        <polygon points={pts([iso(-235, 47), iso(-210, 47), iso(-210, 50), iso(-235, 50)])} className="iso-face" />
+        {/* Hand of 3 cricket cards fanned on desktop */}
+        <polygon points={pts([iso(-244, 58), iso(-234, 58), iso(-234, 78), iso(-244, 78)])} className="iso-face" />
+        <polygon points={pts([iso(-232, 58), iso(-222, 58), iso(-222, 78), iso(-232, 78)])} className="iso-face iso-face--strong" />
+        <polygon points={pts([iso(-220, 58), iso(-210, 58), iso(-210, 78), iso(-220, 78)])} className="iso-face" />
+      </Part>
+
+      {/* WebRTC Peer-to-Peer Voice Mesh */}
+      <Part d={0.3} line>
+        {/* Signaling & audio channels linking clients directly */}
+        <line x1={iso(-226, -53)[0]} y1={iso(-226, -53)[1]} x2={iso(-226, -25)[0]} y2={iso(-226, -25)[1]} className="iso-dash" strokeWidth="1.2" />
+        <line x1={iso(-226, 17)[0]} y1={iso(-226, 17)[1]} x2={iso(-226, 45)[0]} y2={iso(-226, 45)[1]} className="iso-dash" strokeWidth="1.2" />
+        <path d={`M ${iso(-202, -74).join(' ')} Q ${iso(-185, -15).join(' ')} ${iso(-202, 66).join(' ')}`} className="iso-dash" fill="none" strokeWidth="1.2" />
+        {/* Audio mic / wave indicator nodes */}
+        <circle cx={iso(-226, -39)[0]} cy={iso(-226, -39)[1]} r="2" className="iso-node" />
+        <circle cx={iso(-226, -39)[0]} cy={iso(-226, -39)[1]} r="5" className="iso-radar" />
+        <circle cx={iso(-226, 31)[0]} cy={iso(-226, 31)[1]} r="2" className="iso-node" />
+        <circle cx={iso(-226, 31)[0]} cy={iso(-226, 31)[1]} r="5" className="iso-radar" />
+        <circle cx={iso(-188, -4)[0]} cy={iso(-188, -4)[1]} r="2.2" className="iso-node" />
+        <circle cx={iso(-188, -4)[0]} cy={iso(-188, -4)[1]} r="6" className="iso-radar" />
+      </Part>
+
+      {/* WebSocket duplex traces from clients into Gateway */}
+      <Part d={0.4} line>
+        <line x1={iso(-202, -74)[0]} y1={iso(-202, -74)[1]} x2={iso(-165, -45)[0]} y2={iso(-165, -45)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(-202, -4)[0]} y1={iso(-202, -4)[1]} x2={iso(-165, -5)[0]} y2={iso(-165, -5)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(-202, 66)[0]} y1={iso(-202, 66)[1]} x2={iso(-165, 35)[0]} y2={iso(-165, 35)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* 4. Next.js on Vercel & WebSocket Gateway */}
+      <Part d={0.48}>
+        <Plate x={-165} y={-70} w={56} h={130} t={8} />
+        {/* Gateway title rule */}
+        <line x1={iso(-163, -62)[0]} y1={iso(-163, -62)[1]} x2={iso(-111, -62)[0]} y2={iso(-111, -62)[1]} className="iso-line" strokeWidth="1.2" />
+        {/* Three full-duplex socket channel pins */}
+        <circle cx={iso(-160, -45)[0]} cy={iso(-160, -45)[1]} r="2" className="iso-node" />
+        <circle cx={iso(-160, -5)[0]} cy={iso(-160, -5)[1]} r="2" className="iso-node" />
+        <circle cx={iso(-160, 35)[0]} cy={iso(-160, 35)[1]} r="2" className="iso-node" />
+        {/* Heartbeat connection monitor */}
+        <circle cx={iso(-137, -15)[0]} cy={iso(-137, -15)[1]} r="6" className="iso-clock" />
+        <line x1={iso(-137, -15)[0]} y1={iso(-137, -15)[1]} x2={iso(-137, -15)[0] + 3} y2={iso(-137, -15)[1] - 3} className="iso-line" strokeWidth="1.2" />
+        {/* JWT Auth validator block */}
+        <Plate x={-155} y={15} w={36} h={28} t={4} strong />
+        <polygon points={pts([iso(-151, 20), iso(-123, 20), iso(-123, 24), iso(-151, 24)])} className="iso-face" />
+      </Part>
+
+      {/* Trace from Gateway to Room Engine */}
+      <Part d={0.58} line>
+        <line x1={iso(-109, -5)[0]} y1={iso(-109, -5)[1]} x2={iso(-65, -5)[0]} y2={iso(-65, -5)[1]} className="iso-dash" strokeWidth="1.4" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* 5. Master Multiplayer Room Controller */}
+      <Part d={0.65}>
+        <Plate x={-65} y={-85} w={115} h={170} t={10} />
+        {/* Blueprint engineering grid hatch */}
+        <polygon points={pts([iso(-60, -80), iso(45, -80), iso(45, 80), iso(-60, 80)])} fill="url(#hatch-iso)" opacity="0.35" />
+
+        {/* 5a. Room State & Turn Arbiter */}
+        <Plate x={-55} y={-75} w={50} h={46} t={5} strong />
+        {/* Active turn countdown timer */}
+        <circle cx={iso(-42, -52)[0]} cy={iso(-42, -52)[1]} r="7" className="iso-clock" />
+        <path d={`M ${iso(-42, -52).join(' ')} L ${iso(-42, -57).join(' ')}`} className="iso-line" strokeWidth="1.3" />
+        {/* State indicator pills */}
+        <polygon points={pts([iso(-28, -68), iso(-12, -68), iso(-12, -60), iso(-28, -60)])} className="iso-face" />
+        <line x1={iso(-26, -64)[0]} y1={iso(-26, -64)[1]} x2={iso(-14, -64)[0]} y2={iso(-14, -64)[1]} className="iso-line" strokeWidth="1.2" />
+
+        {/* 5b. 50-Card Trump Deck Vault */}
+        <Plate x={-55} y={15} w={50} h={58} t={6} />
+        {/* Stacked 3D deck cards */}
+        <polygon points={pts([iso(-50, 20), iso(-10, 20), iso(-10, 68), iso(-50, 68)])} className="iso-face" />
+        <polygon points={pts([iso(-48, 22), iso(-8, 22), iso(-8, 70), iso(-48, 70)])} className="iso-face" />
+        <polygon points={pts([iso(-46, 24), iso(-6, 24), iso(-6, 72), iso(-46, 72)])} className="iso-face iso-face--strong" />
+        {/* Cricket card photo & stat bars */}
+        <polygon points={pts([iso(-43, 27), iso(-22, 27), iso(-22, 45), iso(-43, 45)])} className="iso-face" />
+        <line x1={iso(-19, 32)[0]} y1={iso(-19, 32)[1]} x2={iso(-9, 32)[0]} y2={iso(-9, 32)[1]} className="iso-line" strokeWidth="1.3" />
+        <line x1={iso(-19, 38)[0]} y1={iso(-19, 38)[1]} x2={iso(-12, 38)[0]} y2={iso(-12, 38)[1]} className="iso-line" />
+        <line x1={iso(-43, 52)[0]} y1={iso(-43, 52)[1]} x2={iso(-9, 52)[0]} y2={iso(-9, 52)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(-43, 58)[0]} y1={iso(-43, 58)[1]} x2={iso(-16, 58)[0]} y2={iso(-16, 58)[1]} className="iso-line" />
+        <line x1={iso(-43, 64)[0]} y1={iso(-43, 64)[1]} x2={iso(-22, 64)[0]} y2={iso(-22, 64)[1]} className="iso-line" />
+
+        {/* 5c. Round Resolver & Card Battle Arena */}
+        <Plate x={5} y={-38} w={42} h={76} t={6} strong />
+        {/* Stat battle comparator (Card A vs Card B) */}
+        <polygon points={pts([iso(9, -30), iso(21, -30), iso(21, -10), iso(9, -10)])} className="iso-face" />
+        <polygon points={pts([iso(27, -30), iso(39, -30), iso(39, -10), iso(27, -10)])} className="iso-face" />
+        <path d={`M ${iso(15, -6).join(' ')} L ${iso(24, 0).join(' ')} L ${iso(33, -6).join(' ')}`} className="iso-line" fill="none" strokeWidth="1.4" />
+        {/* Win / score distribution bars */}
+        <polygon points={pts([iso(9, 10), iso(41, 10), iso(41, 30), iso(9, 30)])} className="iso-face iso-subtle" />
+        <line x1={iso(13, 17)[0]} y1={iso(13, 17)[1]} x2={iso(37, 17)[0]} y2={iso(37, 17)[1]} className="iso-line" strokeWidth="1.3" />
+        <line x1={iso(13, 23)[0]} y1={iso(13, 23)[1]} x2={iso(28, 23)[0]} y2={iso(28, 23)[1]} className="iso-line" />
+      </Part>
+
+      {/* Trace between Round Resolver and Solo AI Opponent */}
+      <Part d={0.75} line>
+        <line x1={iso(47, 0)[0]} y1={iso(47, 0)[1]} x2={iso(105, 0)[0]} y2={iso(105, 0)[1]} className="iso-trace-arrow" strokeWidth="1.3" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(105, 10)[0]} y1={iso(105, 10)[1]} x2={iso(47, 10)[0]} y2={iso(47, 10)[1]} className="iso-dash" strokeWidth="1.2" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* 6. Solo AI Opponent Bot */}
+      <Part d={0.82}>
+        <Plate x={105} y={-45} w={64} h={90} t={12} strong />
+        {/* AI Bot logic chip core */}
+        <Plate x={115} y={-35} w={44} h={42} t={4} />
+        {/* Heuristic decision radar */}
+        <circle cx={iso(137, -14)[0]} cy={iso(137, -14)[1]} r="7" className="iso-radar" />
+        <circle cx={iso(137, -14)[0]} cy={iso(137, -14)[1]} r="2" className="iso-node" />
+        <line x1={iso(137, -23)[0]} y1={iso(137, -23)[1]} x2={iso(137, -5)[0]} y2={iso(137, -5)[1]} className="iso-crosshair" />
+        <line x1={iso(128, -14)[0]} y1={iso(128, -14)[1]} x2={iso(146, -14)[0]} y2={iso(146, -14)[1]} className="iso-crosshair" />
+        {/* AI Card hand representation */}
+        <polygon points={pts([iso(113, 16), iso(127, 16), iso(127, 36), iso(113, 36)])} className="iso-face" />
+        <polygon points={pts([iso(129, 16), iso(143, 16), iso(143, 36), iso(129, 36)])} className="iso-face iso-face--strong" />
+        <polygon points={pts([iso(145, 16), iso(159, 16), iso(159, 36), iso(145, 36)])} className="iso-face" />
+      </Part>
+
+      {/* Precision blueprint boundary and corner ticks */}
+      <Part d={0.9} line>
+        <rect x={iso(-255, -100)[0]} y={iso(-255, -100)[1]} width="12" height="12" className="iso-frame" />
+        <line x1={iso(-255, -100)[0]} y1={iso(-255, -100)[1]} x2={iso(-255, -100)[0] + 6} y2={iso(-255, -100)[1]} className="iso-frame-tick" />
+        <line x1={iso(-255, -100)[0]} y1={iso(-255, -100)[1]} x2={iso(-255, -100)[0]} y2={iso(-255, -100)[1] + 6} className="iso-frame-tick" />
+      </Part>
     </>
   ),
   dealer: (
@@ -822,13 +981,15 @@ const labels = {
     [269, 74, -12, 'LinkedIn & X', false, true, 1.8, 16],
   ],
   cards: [
-    [-210, -79, 14, 'iOS'],
-    [-210, -1, 14, 'Android'],
-    [-210, 77, 14, 'Desktop'],
-    [-232, 18, 30, 'WebRTC voice, peer to peer'],
-    [-30, 0, 76, 'WebSocket room'],
-    [-30, 60, 14, 'Next.js on Vercel'],
-    [132, 0, 42, 'AI opponent for solo'],
+    [-245, -100, 0, 'iOS Client', false, false, 0.2, 18],
+    [-265, -30, 0, 'Android Client', false, false, 0.35, 18],
+    [-245, 92, -10, 'Desktop Web', false, true, 0.5, 18],
+    [-175, 40, 24, 'WebRTC Voice (P2P)', false, true, 0.7, 20],
+    [-145, -80, 0, 'WebSocket Gateway', false, false, 0.9, 18],
+    [-40, -90, 0, 'Room & Turn Arbiter', false, false, 1.1, 18],
+    [-40, 85, -12, '50-Card Trump Deck', false, true, 1.3, 18],
+    [35, -45, 0, 'Round Resolver', false, false, 1.5, 18],
+    [137, 50, -16, 'Solo AI Opponent', true, true, 1.7, 22],
   ],
   dealer: [
     [-214, -57, 14, 'Dealer'],
