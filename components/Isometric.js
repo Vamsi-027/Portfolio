@@ -1751,7 +1751,50 @@ const labels = {
   ],
 }
 
-export default function Isometric({ kind, label, variant = 'iso', fig, title }) {
+// tightly aligned block callouts for the enlarged lightbox modal
+const enlargedLabels = {
+  events: [
+    [-177, -45, 0, 'Event Producer', false, false, 0.2, 20],
+    [-72, -95, 0, 'Kafka Topic (Partitions)', false, false, 0.4, 22],
+    [70, -90, 0, 'Consumer Group', false, false, 0.6, 22],
+    [121, -60, 0, 'Idempotency Key', true, false, 0.8, 20],
+    [-48, 107, 0, 'Retry Topic (Backoff)', false, true, 1.0, 20],
+    [54, 115, 0, 'Dead-Letter Queue', false, true, 1.2, 20],
+  ],
+  cache: [
+    [-146, -70, 0, 'Feed Query Router', false, false, 0.2, 20],
+    [-25, -50, 42, 'Redis Cache-Aside', false, false, 0.4, 22],
+    [45, -50, 42, '80ms Hit Rate', true, false, 0.6, 20],
+    [-66, 95, 0, 'Range Partitions', false, true, 0.8, 20],
+    [66, 95, 0, 'MySQL Clustered Storage', false, true, 1.0, 20],
+  ],
+  agents: [
+    [-183, -42, 0, 'Durable Queue', false, false, 0.2, 20],
+    [-97, -45, 0, 'Planner Agent', false, false, 0.4, 22],
+    [-16, -68, 0, 'RAG & Context', false, false, 0.6, 20],
+    [48, -45, 0, 'Critic & QA Evaluator', false, false, 0.8, 22],
+    [-20, 65, 0, 'Critique Retry Loop', false, true, 1.0, 20],
+    [139, -40, 0, 'Human Review Gate', true, false, 1.2, 20],
+  ],
+  media: [
+    [-215, -40, 0, 'S3 Presigned Upload', false, false, 0.2, 20],
+    [-134, -36, 0, 'Off-Path Queue', false, false, 0.4, 20],
+    [-47, -75, 0, 'FFmpeg Transcoder', false, false, 0.6, 22],
+    [-47, 70, 0, 'ImageMagick & Remotion', false, true, 0.8, 20],
+    [53, -35, 0, 'Adaptive HLS Packager', false, false, 1.0, 20],
+    [155, 60, 0, 'Global Edge CDN', true, true, 1.2, 20],
+  ],
+  cluster: [
+    [-220, -45, 0, 'GitHub Actions CI/CD', false, false, 0.2, 20],
+    [-130, -45, 0, 'Load Test Storm (10k)', false, false, 0.4, 20],
+    [-49, -65, 0, 'K8s Ingress & Envoy', false, false, 0.6, 22],
+    [45, -75, 0, 'Pod Replica Fleet', false, false, 0.8, 22],
+    [45, 60, 0, 'Horizontal Autoscaling', false, true, 1.0, 20],
+    [175, 50, 0, 'p99 < 120ms Latency', true, true, 1.2, 20],
+  ],
+}
+
+export default function Isometric({ kind, label, variant = 'iso', fig, title, showLabels = true, enlarged = false }) {
   const ref = useRef(null)
   const art = useRef(null)
   const stage = useRef(null)
@@ -1761,15 +1804,16 @@ export default function Isometric({ kind, label, variant = 'iso', fig, title }) 
   // idle, running, paused or done; only figures with a flow have a run
   const [run, setRun] = useState('idle')
   const flow = variant === 'manual' ? flows[kind] : null
+  const currentLabels = showLabels ? (enlarged && enlargedLabels[kind] ? enlargedLabels[kind] : labels[kind]) : null
 
   useEffect(() => {
-    if (!labels[kind] || !art.current) return
+    if (!art.current) return
     const b = art.current.getBBox()
-    const padX = 35
-    const padTop = 48
-    const padBottom = 50
+    const padX = enlarged ? 52 : showLabels ? 35 : 22
+    const padTop = enlarged ? 68 : showLabels ? 48 : 24
+    const padBottom = enlarged ? 68 : showLabels ? 50 : 26
     setView([b.x - padX, b.y - padTop, b.width + padX * 2, b.height + padTop + padBottom])
-  }, [kind])
+  }, [kind, enlarged, showLabels])
 
   const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
 
@@ -1835,11 +1879,15 @@ export default function Isometric({ kind, label, variant = 'iso', fig, title }) 
       {flow && <Flow kind={kind} />}
     </svg>
   )
-  const body = !labels[kind] ? svg : (
+  const body = !currentLabels ? (
+    <div className="arch" style={{ aspectRatio: `${view[2]} / ${view[3]}` }}>
+      {svg}
+    </div>
+  ) : (
     <div className="arch" style={{ aspectRatio: `${view[2]} / ${view[3]}` }}>
       {svg}
       <ul className="arch__labels" aria-hidden="true">
-        {labels[kind].map(([x, y, z, text, you, below, d, len]) => {
+        {currentLabels.map(([x, y, z, text, you, below, d, len]) => {
           const [sx, sy] = iso(x, y, z)
           const cls = [you && 'is-you', below && 'is-below'].filter(Boolean).join(' ') || undefined
           return (
