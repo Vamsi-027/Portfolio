@@ -1711,43 +1711,43 @@ const labels = {
     [210, 52, -8, 'Stripe Checkout', false, true, 2.0, 16],
   ],
   events: [
-    [-177, -50, 0, 'Event Producer', false, false, 0.2, 16],
-    [-72, -75, 0, 'Kafka Topic (Partitions)', false, false, 0.4, 18],
-    [45, -92, 0, 'Consumer Group', false, false, 0.6, 16],
-    [121, -66, 0, 'Idempotency Key', true, false, 0.8, 18],
-    [-34, 95, -12, 'Retry Topic (Backoff)', false, true, 1.0, 18],
-    [54, 118, -12, 'Dead-Letter Queue', false, true, 1.2, 18],
+    [-205, -90, 0, 'Event Producer', false, false, 0.2, 18],
+    [-110, -125, 0, 'Kafka Topic (Partitions)', false, false, 0.4, 20],
+    [35, -140, 0, 'Consumer Group', false, false, 0.6, 18],
+    [115, -95, 0, 'Idempotency Key', true, false, 0.8, 18],
+    [-45, 110, -10, 'Retry Topic (Backoff)', false, true, 1.0, 18],
+    [55, 135, -10, 'Dead-Letter Queue', false, true, 1.2, 18],
   ],
   cache: [
-    [-146, -75, 0, 'Feed Query Router', false, false, 0.2, 16],
-    [-2, -58, 42, 'Redis Cache-Aside', false, false, 0.4, 18],
-    [55, -45, 42, '80ms Hit Rate', true, false, 0.6, 20],
-    [-70, 95, -12, 'Range Partitions', false, true, 0.8, 18],
-    [55, 95, -12, 'MySQL Clustered Storage', false, true, 1.0, 18],
+    [-160, -115, 0, 'Feed Query Router', false, false, 0.2, 18],
+    [-25, -115, 42, 'Redis Cache-Aside', false, false, 0.4, 20],
+    [75, -80, 42, '80ms Hit Rate', true, false, 0.6, 18],
+    [-70, 130, -10, 'Range Partitions', false, true, 0.8, 18],
+    [35, 130, -10, 'MySQL Clustered Storage', false, true, 1.0, 18],
   ],
   agents: [
-    [-183, -50, 0, 'Durable Queue', false, false, 0.2, 16],
-    [-97, -55, 0, 'Planner Agent', false, false, 0.4, 18],
-    [-20, -78, 0, 'RAG & Context', false, false, 0.6, 16],
-    [58, -55, 0, 'Critic & QA Evaluator', false, false, 0.8, 18],
-    [-20, 68, -12, 'Critique Retry Loop', false, true, 1.0, 18],
-    [95, 26, -12, 'Human Review Gate', true, true, 1.2, 18],
+    [-195, -90, 0, 'Durable Queue', false, false, 0.2, 18],
+    [-105, -105, 0, 'Planner Agent', false, false, 0.4, 20],
+    [-25, -115, 0, 'RAG & Context', false, false, 0.6, 20],
+    [55, -110, 0, 'Critic & QA Evaluator', false, false, 0.8, 18],
+    [-15, 110, -10, 'Critique Retry Loop', false, true, 1.0, 18],
+    [125, 75, -10, 'Human Review Gate', true, true, 1.2, 18],
   ],
   media: [
-    [-215, -48, 0, 'S3 Presigned Upload', false, false, 0.2, 16],
-    [-134, -45, 0, 'Off-Path Queue', false, false, 0.4, 16],
-    [-47, -85, 0, 'FFmpeg Transcoder', false, false, 0.6, 18],
-    [-47, 85, -12, 'ImageMagick & Remotion', false, true, 0.8, 18],
-    [53, -45, 0, 'Adaptive HLS Packager', false, false, 1.0, 18],
-    [135, 42, -12, 'Global Edge CDN', true, true, 1.2, 18],
+    [-230, -90, 0, 'S3 Presigned Upload', false, false, 0.2, 18],
+    [-150, -105, 0, 'Off-Path Queue', false, false, 0.4, 20],
+    [-65, -125, 0, 'FFmpeg Transcoder', false, false, 0.6, 20],
+    [-45, 110, -10, 'ImageMagick & Remotion', false, true, 0.8, 18],
+    [25, -125, 0, 'Adaptive HLS Packager', false, false, 1.0, 20],
+    [165, 85, -10, 'Global Edge CDN', true, true, 1.2, 18],
   ],
   cluster: [
-    [-220, -55, 0, 'GitHub Actions CI/CD', false, false, 0.2, 16],
-    [-130, -55, 0, 'Load Test Storm (10k)', false, false, 0.4, 16],
-    [-49, -75, 0, 'K8s Ingress & Envoy', false, false, 0.6, 18],
-    [45, -85, 0, 'Pod Replica Fleet', false, false, 0.8, 18],
-    [45, 80, -12, 'Horizontal Autoscaling', false, true, 1.0, 18],
-    [142, 40, -12, 'p99 < 120ms Latency', true, true, 1.2, 18],
+    [-230, -90, 0, 'GitHub Actions CI/CD', false, false, 0.2, 18],
+    [-150, -105, 0, 'Load Test Storm (10k)', false, false, 0.4, 20],
+    [-65, -120, 0, 'K8s Ingress & Envoy', false, false, 0.6, 20],
+    [15, -135, 0, 'Pod Replica Fleet', false, false, 0.8, 20],
+    [45, 125, -10, 'Horizontal Autoscaling', false, true, 1.0, 18],
+    [175, 80, -10, 'p99 < 120ms Latency', true, true, 1.2, 18],
   ],
 }
 
@@ -1765,8 +1765,10 @@ export default function Isometric({ kind, label, variant = 'iso', fig, title }) 
   useEffect(() => {
     if (!labels[kind] || !art.current) return
     const b = art.current.getBBox()
-    const pad = 22
-    setView([b.x - pad, b.y - pad * 1.6, b.width + pad * 2, b.height + pad * 2.6])
+    const padX = 35
+    const padTop = 48
+    const padBottom = 50
+    setView([b.x - padX, b.y - padTop, b.width + padX * 2, b.height + padTop + padBottom])
   }, [kind])
 
   const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
