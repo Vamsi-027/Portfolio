@@ -45,8 +45,8 @@ const Expertise = ({ art = 'iso' }) => {
     <section id="expertise" className="band band--skills" aria-labelledby="expertise-title">
       <div className="container">
         <div className="head">
-          <h2 id="expertise-title">Java and Kafka at the core</h2>
-          <p className="lead">Five kinds of system I build, and the tools under each.</p>
+          <h2 id="expertise-title">Distributed systems & core infrastructure</h2>
+          <p className="lead">Architectural domains I engineer across the stack, and the battle-tested tooling behind each.</p>
         </div>
         <ul className="svcs">
           {areas.map((a, i) => (
