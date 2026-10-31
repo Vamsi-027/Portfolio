@@ -232,6 +232,26 @@ const flows = {
       { x: -55, y: 15, w: 48, h: 55, at: [0.62, 0.72], soft: true },
     ],
   },
+  dealer: {
+    T: 7.6,
+    assembly: 2.0,
+    tokens: [
+      // 1. Dealer pushes inventory: Dealer Portal -> RBAC -> API -> PostgreSQL write
+      [[-226, -68, 0, 0.03], [-148, -45, 0, 0.12], [-20, -50, 0, 0.22], [115, -10, 0, 0.32]],
+      // 2. Buyer 1 locks vehicle reservation: Storefront -> RBAC -> Stock Lock & 15-min TTL hold -> DB marked HELD
+      [[-226, 57, 0, 0.15], [-148, 15, 0, 0.24], [-20, -25, 0, 0.35], [115, -10, 0, 0.44]],
+      // 3. Buyer 2 concurrent collision: attempts same car -> rejected by Concurrency Lock
+      [[-226, 57, 0, 0.30], [-148, 15, 0, 0.38], [-55, -25, 0, 0.46], [-148, 25, 0, 0.54]],
+      // 4. Stripe Checkout sends Webhook -> Signature verified -> Idempotency check -> DB marked SOLD
+      [[230, 46, 0, 0.54], [120, 80, 0, 0.62], [-20, 60, 0, 0.70], [115, -10, 0, 0.80], [-226, 57, 0, 0.92]],
+    ],
+    flashes: [
+      { x: -165, y: -75, w: 34, h: 145, at: [0.12, 0.24], soft: true },
+      { x: -75, y: -75, w: 110, h: 80, at: [0.22, 0.48] },
+      { x: 85, y: -50, w: 68, h: 90, at: [0.32, 0.84], soft: true },
+      { x: -75, y: 35, w: 110, h: 56, at: [0.70, 0.78] },
+    ],
+  },
 }
 
 const RUNS = 2
@@ -863,20 +883,202 @@ const drawings = {
   ),
   dealer: (
     <>
-      <Plate x={-135} y={-95} w={270} h={170} nodes={false} className="iso-dlq" />
-      <Plate x={-240} y={-80} w={52} h={46} t={6} />
-      <Plate x={-240} y={6} w={52} h={46} t={6} />
-      <Dash from={[-188, -57]} to={[-150, -40]} />
-      <Dash from={[-188, 29]} to={[-150, 10]} />
-      <Plate x={-150} y={-80} w={14} h={135} t={34} strong />
-      <Plate x={-115} y={-75} w={115} h={125} t={8} />
-      <Plate x={-95} y={-55} w={75} h={55} z={30} t={6} />
-      <Dash from={[0, -10]} to={[55, -10]} />
-      <Plate x={55} y={-45} w={62} h={62} t={36} />
-      <Plate x={-75} y={110} w={64} h={40} t={6} />
-      <Dash from={[-43, 110]} to={[-43, 50]} />
-      <Packet at={[-180, -60, 0]} d={60} i={0} size={8} />
-      <Packet at={[-180, 26, 0]} d={60} i={1} size={8} />
+      {/* 1. Dealer Inventory & Admin Portal */}
+      <Part d={0}>
+        <Plate x={-250} y={-90} w={48} h={44} t={6} />
+        {/* Desktop window controls */}
+        <line x1={iso(-248, -82)[0]} y1={iso(-248, -82)[1]} x2={iso(-204, -82)[0]} y2={iso(-204, -82)[1]} className="iso-line" strokeWidth="1.1" />
+        <circle cx={iso(-245, -86)[0]} cy={iso(-245, -86)[1]} r="1.2" className="iso-node" />
+        <circle cx={iso(-240, -86)[0]} cy={iso(-240, -86)[1]} r="1.2" className="iso-node" />
+        {/* URL Pill Bar */}
+        <polygon points={pts([iso(-235, -87), iso(-210, -87), iso(-210, -84), iso(-235, -84)])} className="iso-face" />
+        {/* Inventory Table Grid / Vehicle Data Rows */}
+        <line x1={iso(-244, -74)[0]} y1={iso(-244, -74)[1]} x2={iso(-208, -74)[0]} y2={iso(-208, -74)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(-244, -66)[0]} y1={iso(-244, -66)[1]} x2={iso(-214, -66)[0]} y2={iso(-214, -66)[1]} className="iso-line" />
+        <line x1={iso(-244, -58)[0]} y1={iso(-244, -58)[1]} x2={iso(-210, -58)[0]} y2={iso(-210, -58)[1]} className="iso-line" />
+        {/* [Add / Edit VIN] badge */}
+        <Plate x={-222} y={-64} w={14} h={12} t={3} strong />
+        <line x1={iso(-219, -58)[0]} y1={iso(-219, -58)[1]} x2={iso(-211, -58)[0]} y2={iso(-211, -58)[1]} className="iso-line" strokeWidth="1.1" />
+      </Part>
+
+      {/* 2. Buyer Mobile & Web Storefront */}
+      <Part d={0.12}>
+        <Plate x={-250} y={35} w={48} h={44} t={6} />
+        {/* Punch-hole camera & top bar */}
+        <circle cx={iso(-243, 40)[0]} cy={iso(-243, 40)[1]} r="1.2" className="iso-node" />
+        <polygon points={pts([iso(-238, 38), iso(-210, 38), iso(-210, 42), iso(-238, 42)])} className="iso-face" />
+        {/* Vehicle card outline / Car silhouette */}
+        <polygon points={pts([iso(-244, 46), iso(-212, 46), iso(-212, 64), iso(-244, 64)])} className="iso-face iso-subtle" />
+        {/* Stylized sports car profile */}
+        <path
+          d={`M ${iso(-240, 58).join(' ')} L ${iso(-236, 54).join(' ')} L ${iso(-228, 54).join(' ')} L ${iso(-222, 57).join(' ')} L ${iso(-216, 58).join(' ')}`}
+          className="iso-line"
+          fill="none"
+          strokeWidth="1.3"
+        />
+        <circle cx={iso(-236, 59)[0]} cy={iso(-236, 59)[1]} r="1.5" className="iso-node" />
+        <circle cx={iso(-220, 59)[0]} cy={iso(-220, 59)[1]} r="1.5" className="iso-node" />
+        {/* "Hold Vehicle" button with countdown clock */}
+        <Plate x={-242} y={67} w={32} h={9} t={2} strong />
+        <circle cx={iso(-238, 71.5)[0]} cy={iso(-238, 71.5)[1]} r="2" className="iso-clock" />
+        <line x1={iso(-234, 71.5)[0]} y1={iso(-234, 71.5)[1]} x2={iso(-216, 71.5)[0]} y2={iso(-216, 71.5)[1]} className="iso-line" strokeWidth="1" />
+      </Part>
+
+      {/* Traces from Portals to RBAC Middleware */}
+      <Part d={0.22} line>
+        <line x1={iso(-202, -68)[0]} y1={iso(-202, -68)[1]} x2={iso(-165, -45)[0]} y2={iso(-165, -45)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(-202, 57)[0]} y1={iso(-202, 57)[1]} x2={iso(-165, 15)[0]} y2={iso(-165, 15)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        {/* Trace label badges */}
+        <circle cx={iso(-182, -56)[0]} cy={iso(-182, -56)[1]} r="2" className="iso-node" />
+        <circle cx={iso(-182, 36)[0]} cy={iso(-182, 36)[1]} r="2" className="iso-node" />
+      </Part>
+
+      {/* 3. RBAC Middleware & Security Shield */}
+      <Part d={0.32}>
+        <Plate x={-165} y={-75} w={34} h={145} t={14} strong />
+        {/* Keyhole / Shield emblem */}
+        <circle cx={iso(-148, -60)[0]} cy={iso(-148, -60)[1]} r="3.5" className="iso-node" />
+        <path d={`M ${iso(-151, -57).join(' ')} L ${iso(-148, -50).join(' ')} L ${iso(-145, -57).join(' ')}`} className="iso-line" strokeWidth="1.4" fill="none" />
+        {/* Channel partition divider */}
+        <line x1={iso(-163, -5)[0]} y1={iso(-163, -5)[1]} x2={iso(-133, -5)[0]} y2={iso(-133, -5)[1]} className="iso-dash" strokeWidth="1.2" />
+        {/* Top Channel: Dealer JWT Validator */}
+        <polygon points={pts([iso(-161, -48), iso(-135, -48), iso(-135, -20), iso(-161, -20)])} className="iso-face" />
+        <line x1={iso(-157, -34)[0]} y1={iso(-157, -34)[1]} x2={iso(-139, -34)[0]} y2={iso(-139, -34)[1]} className="iso-line" strokeWidth="1.1" />
+        <circle cx={iso(-148, -34)[0]} cy={iso(-148, -34)[1]} r="1.8" className="iso-node" />
+        {/* Bottom Channel: Buyer Role Guard & 403 Rejection Shunt */}
+        <polygon points={pts([iso(-161, 8), iso(-135, 8), iso(-135, 36), iso(-161, 36)])} className="iso-face" />
+        <line x1={iso(-157, 22)[0]} y1={iso(-157, 22)[1]} x2={iso(-139, 22)[0]} y2={iso(-139, 22)[1]} className="iso-line" strokeWidth="1.1" />
+        {/* Unauthorized Rejection 403 indicator */}
+        <path d={`M ${iso(-148, 48).join(' ')} Q ${iso(-138, 58).join(' ')} ${iso(-148, 65).join(' ')}`} className="iso-dash" fill="none" strokeWidth="1.2" />
+        <circle cx={iso(-148, 65)[0]} cy={iso(-148, 65)[1]} r="1.6" className="iso-node" />
+      </Part>
+
+      {/* 4. Docker Compose Container Boundary */}
+      <Part d={0.42}>
+        <Plate x={-95} y={-105} w={260} h={215} nodes={false} className="iso-dlq" />
+        {/* Container corner ticks */}
+        <line x1={iso(-95, -105)[0]} y1={iso(-95, -105)[1]} x2={iso(-95, -105)[0] + 8} y2={iso(-95, -105)[1]} className="iso-frame-tick" />
+        <line x1={iso(-95, -105)[0]} y1={iso(-95, -105)[1]} x2={iso(-95, -105)[0]} y2={iso(-95, -105)[1] + 8} className="iso-frame-tick" />
+        <line x1={iso(165, -105)[0]} y1={iso(165, -105)[1]} x2={iso(165, -105)[0] - 8} y2={iso(165, -105)[1]} className="iso-frame-tick" />
+        <line x1={iso(165, 110)[0]} y1={iso(165, 110)[1]} x2={iso(165, 110)[0] - 8} y2={iso(165, 110)[1]} className="iso-frame-tick" />
+        {/* Internal Docker Bridge Network trace */}
+        <line x1={iso(35, -35)[0]} y1={iso(35, -35)[1]} x2={iso(85, -35)[0]} y2={iso(85, -35)[1]} className="iso-dash" strokeWidth="1.5" />
+        <line x1={iso(35, 15)[0]} y1={iso(35, 15)[1]} x2={iso(85, 15)[0]} y2={iso(85, 15)[1]} className="iso-dash" strokeWidth="1.5" />
+      </Part>
+
+      {/* Trace from RBAC to Node.js API Service */}
+      <Part d={0.46} line>
+        <line x1={iso(-131, -35)[0]} y1={iso(-131, -35)[1]} x2={iso(-75, -35)[0]} y2={iso(-75, -35)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(-131, 20)[0]} y1={iso(-131, 20)[1]} x2={iso(-75, -10)[0]} y2={iso(-75, -10)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* 5. Node.js API Service & Concurrency Engine */}
+      <Part d={0.52}>
+        <Plate x={-75} y={-75} w={110} h={80} t={10} strong />
+        {/* Service title rule */}
+        <line x1={iso(-73, -65)[0]} y1={iso(-73, -65)[1]} x2={iso(33, -65)[0]} y2={iso(33, -65)[1]} className="iso-line" strokeWidth="1.2" />
+        {/* Sub-block A: Stock Validation & Concurrency Lock */}
+        <polygon points={pts([iso(-70, -60), iso(30, -60), iso(30, -30), iso(-70, -30)])} className="iso-face" />
+        {/* Concurrency Mutex Padlock */}
+        <circle cx={iso(-58, -45)[0]} cy={iso(-58, -45)[1]} r="2.5" className="iso-node" />
+        <path d={`M ${iso(-61, -48).join(' ')} L ${iso(-61, -52).join(' ')} Q ${iso(-58, -55).join(' ')} ${iso(-55, -52).join(' ')} L ${iso(-55, -48).join(' ')}`} className="iso-line" fill="none" strokeWidth="1.2" />
+        <line x1={iso(-48, -45)[0]} y1={iso(-48, -45)[1]} x2={iso(20, -45)[0]} y2={iso(20, -45)[1]} className="iso-line" strokeWidth="1.3" />
+        <line x1={iso(-48, -38)[0]} y1={iso(-48, -38)[1]} x2={iso(5, -38)[0]} y2={iso(5, -38)[1]} className="iso-line" />
+
+        {/* Sub-block B: 15-Minute Reservation TTL Timer State Machine */}
+        <polygon points={pts([iso(-70, -22), iso(30, -22), iso(30, 0), iso(-70, 0)])} className="iso-face" />
+        {/* Clock dial with ticking hand */}
+        <circle cx={iso(-58, -11)[0]} cy={iso(-58, -11)[1]} r="4.5" className="iso-clock" />
+        <line x1={iso(-58, -11)[0]} y1={iso(-58, -11)[1]} x2={iso(-58, -11)[0] + 3} y2={iso(-58, -11)[1] - 2} className="iso-line" strokeWidth="1.2" />
+        {/* State transition pipeline: AVAILABLE -> HELD -> SOLD / EXPIRED */}
+        <line x1={iso(-48, -11)[0]} y1={iso(-48, -11)[1]} x2={iso(-15, -11)[0]} y2={iso(-15, -11)[1]} className="iso-line" strokeWidth="1.3" />
+        <circle cx={iso(-15, -11)[0]} cy={iso(-15, -11)[1]} r="1.8" className="iso-node" />
+        <line x1={iso(-10, -11)[0]} y1={iso(-10, -11)[1]} x2={iso(20, -11)[0]} y2={iso(20, -11)[1]} className="iso-dash" strokeWidth="1.2" />
+      </Part>
+
+      {/* 6. Stripe Webhook Listener & Idempotency Vault */}
+      <Part d={0.62}>
+        <Plate x={-75} y={35} w={110} h={56} t={8} />
+        {/* Vault header */}
+        <line x1={iso(-73, 43)[0]} y1={iso(-73, 43)[1]} x2={iso(33, 43)[0]} y2={iso(33, 43)[1]} className="iso-line" strokeWidth="1.2" />
+        {/* HMAC Signature Check Shield */}
+        <polygon points={pts([iso(-68, 50), iso(-45, 50), iso(-45, 78), iso(-68, 78)])} className="iso-face iso-face--strong" />
+        <path d={`M ${iso(-62, 60).join(' ')} L ${iso(-57, 65).join(' ')} L ${iso(-50, 56).join(' ')}`} className="iso-line" fill="none" strokeWidth="1.4" />
+        <circle cx={iso(-56, 72)[0]} cy={iso(-56, 72)[1]} r="1.5" className="iso-node" />
+        {/* Idempotency Event Deduplication Ledger */}
+        <polygon points={pts([iso(-38, 50), iso(28, 50), iso(28, 78), iso(-38, 78)])} className="iso-face" />
+        <line x1={iso(-32, 58)[0]} y1={iso(-32, 58)[1]} x2={iso(20, 58)[0]} y2={iso(20, 58)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(-32, 66)[0]} y1={iso(-32, 66)[1]} x2={iso(12, 66)[0]} y2={iso(12, 66)[1]} className="iso-line" />
+        <line x1={iso(-32, 74)[0]} y1={iso(-32, 74)[1]} x2={iso(16, 74)[0]} y2={iso(16, 74)[1]} className="iso-line" />
+      </Part>
+
+      {/* Connecting Trace between Webhook Vault and API */}
+      <Part d={0.68} line>
+        <line x1={iso(-20, 35)[0]} y1={iso(-20, 35)[1]} x2={iso(-20, 5)[0]} y2={iso(-20, 5)[1]} className="iso-dash" strokeWidth="1.3" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* Traces from API & Webhook Vault to PostgreSQL */}
+      <Part d={0.72} line>
+        <line x1={iso(35, -35)[0]} y1={iso(35, -35)[1]} x2={iso(85, -20)[0]} y2={iso(85, -20)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+        <line x1={iso(35, 60)[0]} y1={iso(35, 60)[1]} x2={iso(85, 10)[0]} y2={iso(85, 10)[1]} className="iso-trace-arrow" markerEnd="url(#arrow-iso)" />
+      </Part>
+
+      {/* 7. PostgreSQL Database Cluster (ACID Relational Storage) */}
+      <Part d={0.78}>
+        {/* Persistent Volume Base Disk */}
+        <Plate x={80} y={-55} w={78} h={100} t={6} nodes={false} className="iso-dlq" />
+        {/* 3D Database Tower */}
+        <Plate x={85} y={-50} w={68} h={90} t={28} strong />
+        {/* Relational Table Schema Grid Lines */}
+        <line x1={iso(92, -40)[0]} y1={iso(92, -40)[1]} x2={iso(146, -40)[0]} y2={iso(146, -40)[1]} className="iso-line" strokeWidth="1.4" />
+        <line x1={iso(92, -26)[0]} y1={iso(92, -26)[1]} x2={iso(142, -26)[0]} y2={iso(142, -26)[1]} className="iso-line" />
+        <line x1={iso(92, -12)[0]} y1={iso(92, -12)[1]} x2={iso(138, -12)[0]} y2={iso(138, -12)[1]} className="iso-line" />
+        <line x1={iso(92, 2)[0]} y1={iso(92, 2)[1]} x2={iso(144, 2)[0]} y2={iso(144, 2)[1]} className="iso-line" strokeWidth="1.2" />
+        <line x1={iso(92, 16)[0]} y1={iso(92, 16)[1]} x2={iso(130, 16)[0]} y2={iso(130, 16)[1]} className="iso-line" />
+        <line x1={iso(92, 30)[0]} y1={iso(92, 30)[1]} x2={iso(140, 30)[0]} y2={iso(140, 30)[1]} className="iso-line" strokeWidth="1.2" />
+        {/* Column dividers */}
+        <line x1={iso(116, -40)[0]} y1={iso(116, -40)[1]} x2={iso(116, 32)[0]} y2={iso(116, 32)[1]} className="iso-dash" strokeWidth="1" />
+        {/* Database activity LED status beacons */}
+        <circle cx={iso(92, -44)[0]} cy={iso(92, -44)[1]} r="2" className="iso-node" />
+        <circle cx={iso(100, -44)[0]} cy={iso(100, -44)[1]} r="2" className="iso-node" />
+        <circle cx={iso(108, -44)[0]} cy={iso(108, -44)[1]} r="2" className="iso-node" />
+      </Part>
+
+      {/* 8. Stripe External Payment Cloud & Checkout */}
+      <Part d={0.88}>
+        <Plate x={205} y={20} w={52} h={52} t={8} />
+        {/* Card checkout visual / Credit card glyph */}
+        <polygon points={pts([iso(212, 28), iso(250, 28), iso(250, 52), iso(212, 52)])} className="iso-face" />
+        {/* Magnetic stripe */}
+        <line x1={iso(212, 34)[0]} y1={iso(212, 34)[1]} x2={iso(250, 34)[0]} y2={iso(250, 34)[1]} className="iso-line" strokeWidth="2.2" />
+        {/* EMV Chip */}
+        <polygon points={pts([iso(218, 40), iso(226, 40), iso(226, 46), iso(218, 46)])} className="iso-face--strong" />
+        {/* Cardholder dots */}
+        <circle cx={iso(234, 46)[0]} cy={iso(234, 46)[1]} r="1.3" className="iso-node" />
+        <circle cx={iso(240, 46)[0]} cy={iso(240, 46)[1]} r="1.3" className="iso-node" />
+        {/* Payment confirmation wave */}
+        <path d={`M ${iso(250, 35).join(' ')} Q ${iso(258, 46).join(' ')} ${iso(250, 57).join(' ')}`} className="iso-line" fill="none" strokeDasharray="2 2" />
+      </Part>
+
+      {/* Verified Webhook Ingress Loop back from Stripe into Webhook Gateway */}
+      <Part d={0.94} line>
+        <path
+          d={`M ${iso(205, 46).join(' ')} Q ${iso(140, 100).join(' ')} ${iso(35, 62).join(' ')}`}
+          className="iso-dash"
+          fill="none"
+          strokeWidth="1.4"
+          markerEnd="url(#arrow-iso)"
+        />
+        <circle cx={iso(120, 80)[0]} cy={iso(120, 80)[1]} r="2.2" className="iso-node" />
+        <circle cx={iso(120, 80)[0]} cy={iso(120, 80)[1]} r="6" className="iso-radar" />
+      </Part>
+
+      {/* Precision blueprint boundary and corner ticks */}
+      <Part d={1.0} line>
+        <rect x={iso(-255, -95)[0]} y={iso(-255, -95)[1]} width="12" height="12" className="iso-frame" />
+        <line x1={iso(-255, -95)[0]} y1={iso(-255, -95)[1]} x2={iso(-255, -95)[0] + 6} y2={iso(-255, -95)[1]} className="iso-frame-tick" />
+        <line x1={iso(-255, -95)[0]} y1={iso(-255, -95)[1]} x2={iso(-255, -95)[0]} y2={iso(-255, -95)[1] + 6} className="iso-frame-tick" />
+      </Part>
     </>
   ),
   events: (
@@ -992,14 +1194,16 @@ const labels = {
     [137, 50, -16, 'Solo AI Opponent', true, true, 1.7, 22],
   ],
   dealer: [
-    [-214, -57, 14, 'Dealer'],
-    [-214, 29, 14, 'Buyer'],
-    [-143, -12, 48, 'RBAC middleware'],
-    [-57, -27, 44, 'Reservations: stock check, timeout'],
-    [-57, 40, 14, 'Node.js API'],
-    [86, -14, 46, 'PostgreSQL'],
-    [-43, 130, 14, 'Stripe webhooks, verified, idempotent'],
-    [100, 70, 6, 'Docker Compose'],
+    [-245, -100, 0, 'Dealer Portal', false, false, 0.2, 18],
+    [-215, 60, -8, 'Buyer Storefront', false, true, 0.4, 16],
+    [-160, -85, 0, 'RBAC Middleware', false, false, 0.6, 20],
+    [-160, 68, -12, 'Role Separation', false, true, 0.8, 18],
+    [-75, -112, 0, 'Docker Compose', false, false, 1.0, 18],
+    [-20, -85, 0, 'Stock Lock & Concurrency', false, false, 1.2, 18],
+    [-20, 10, -8, '15-min TTL Hold', false, true, 1.4, 18],
+    [-20, 95, -12, 'Stripe Idempotency', false, true, 1.6, 20],
+    [120, -60, 0, 'PostgreSQL (ACID)', true, false, 1.8, 22],
+    [210, 52, -8, 'Stripe Checkout', false, true, 2.0, 16],
   ],
 }
 

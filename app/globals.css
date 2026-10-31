@@ -394,7 +394,7 @@ body { font-size: var(--text-md); line-height: 1.55; }
 
 .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-2xl); align-items: start; }
 .about__portrait { position: sticky; top: calc(var(--nav-h) + var(--space-lg)); margin: 0; }
-.portrait { aspect-ratio: 1 / 1; border-radius: 12%; background: var(--color-paper-2); }
+.portrait { position: relative; overflow: hidden; aspect-ratio: 1 / 1; border-radius: 12%; background: var(--color-paper-2); }
 .caption { margin-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
 .about__body { display: grid; gap: var(--space-xl); }
 .about__head { display: grid; gap: var(--space-md); }
