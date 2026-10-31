@@ -4,20 +4,19 @@ const rules = [
   {
     title: 'Design for Failure',
     body: [
-      'In a distributed environment, failures are guaranteed. Network latency, service crashes, thread starvation, and database bottlenecks are inevitably going to happen. My core philosophy is to design architectures that anticipate and absorb these failures gracefully.',
-      'This means keeping microservices single-responsibility, enforcing strict timeouts, implementing circuit breakers, and enforcing idempotent operations. I rely heavily on proper observability (logging, metrics, tracing) because you cannot fix what you cannot see.',
+      'Networks partition, threads starve, downstream services crash. I build architectures that absorb failure by default: strict deadline propagation, circuit breakers, bounded retries, and idempotent mutations so retried operations never corrupt state. If it isn’t measured with traces and metrics, it’s already broken.',
     ],
   },
   {
-    title: 'Boring Technology is Good Technology',
+    title: 'Battle-Tested Primitives',
     body: [
-      'When reliability matters, I prefer battle-tested, “boring” technology. Tools like Java, Spring Boot, Kafka, and PostgreSQL have massive ecosystems, predictable failure modes at scale, and proven track records. Innovation should happen in the product logic, not in gambling on unproven infrastructure.',
+      'Production runs on proven primitives: Java, Spring Boot, Kafka, Postgres, Redis. Known performance envelopes and transparent failure modes at scale. Novelty belongs in product leverage, not gambling system availability on unproven infrastructure.',
     ],
   },
   {
-    title: 'Current Explorations',
+    title: 'Distributed Systems × AI',
     body: [
-      'My M.S. in AI pulled me to where distributed systems meet ML: agent pipelines, evals, and the queues and caches that stop a paid model call from running twice. I build them daily with Claude Code and Codex, and I judge them the way I judged Kural: speed, failure rate, cost.',
+      'Applying backend rigor to LLM orchestration: durable state machines, eval harnesses, and cached token pipelines. Non-deterministic models demand deterministic infrastructure: paid API calls never run twice, bad outputs never bypass QA, and runs are benchmarked strictly on latency, cost, and failure rate.',
     ],
   },
 ]
@@ -37,7 +36,7 @@ const About = () => {
           <div className="about__head">
             <h2 id="about-title">Failures are guaranteed</h2>
             <p className="lead">
-              I build systems that solve problems at the infrastructure level, where design decisions directly dictate reliability, scalability, and performance.
+              I engineer backends at the infrastructure layer—where throughput, latency, and fault tolerance are decided by architecture, not hope.
             </p>
           </div>
           <ol className="rules">
