@@ -96,15 +96,15 @@ export default function RootLayout({ children }) {
         <a href="#main-content" className="skip">
           Skip to main content
         </a>
-        
+
         {/* Navigation */}
         <Navigation />
-        
+
         {/* Main Content */}
         <main id="main-content">
           {children}
         </main>
-        
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
