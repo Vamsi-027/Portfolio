@@ -889,13 +889,22 @@ export default function Isometric({ kind, label, variant = 'iso', fig, title }) 
     const el = flow ? stage.current : ref.current
     if (!el) return
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (flow && !still) el.classList.add('is-armed')
+    el.classList.add('is-live')
+
+    if (!flow || still) return
+
+    const rect = el.getBoundingClientRect()
+    const inView = rect.top < window.innerHeight + 200 && rect.bottom > -200
+    if (inView) {
+      play()
+      return
+    }
+
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return
       io.disconnect()
-      if (!flow) { el.classList.add('is-live'); return }
-      if (!still) play()
-    }, { threshold: 0.35 })
+      play()
+    }, { threshold: 0.05, rootMargin: '200px 0px' })
     io.observe(el)
     return () => { io.disconnect(); clear() }
   }, [])
